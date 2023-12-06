@@ -1,0 +1,6 @@
+[submodule "submodule/spreadsheet"]
+	path = submodule/spreadsheet
+	url = https://github.com/dmitriy-shmilo/spreadsheet
+[submodule "Lib/spreadsheet"]
+	path = Lib/spreadsheet
+	url = https://github.com/dmitriy-shmilo/spreadsheet
