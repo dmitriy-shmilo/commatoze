@@ -9,12 +9,16 @@
 /* Begin PBXBuildFile section */
 		2C59CF8E2B20E9970048363D /* Spreadsheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C59CF8D2B20E9780048363D /* Spreadsheet.framework */; };
 		2C59CF8F2B20E9970048363D /* Spreadsheet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C59CF8D2B20E9780048363D /* Spreadsheet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2C74875E2B21D43E001D134B /* LibCSV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C74875B2B21D42D001D134B /* LibCSV.framework */; };
+		2C74875F2B21D43E001D134B /* LibCSV.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C74875B2B21D42D001D134B /* LibCSV.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2C7487622B21D4DD001D134B /* test.csv in Resources */ = {isa = PBXBuildFile; fileRef = 2C7487612B21D4DD001D134B /* test.csv */; };
 		2C917CDB2B20DB53005FCFB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C917CDA2B20DB53005FCFB1 /* AppDelegate.swift */; };
 		2C917CDD2B20DB53005FCFB1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C917CDC2B20DB53005FCFB1 /* SceneDelegate.swift */; };
 		2C917CDF2B20DB53005FCFB1 /* ContentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C917CDE2B20DB53005FCFB1 /* ContentTableViewController.swift */; };
 		2C917CE22B20DB53005FCFB1 /* ContentTable.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C917CE02B20DB53005FCFB1 /* ContentTable.storyboard */; };
 		2C917CE42B20DB54005FCFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C917CE32B20DB54005FCFB1 /* Assets.xcassets */; };
 		2C917CE72B20DB54005FCFB1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C917CE52B20DB54005FCFB1 /* LaunchScreen.storyboard */; };
+		2CF6A4302B264DF2004FAD45 /* ContentTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF6A42F2B264DF2004FAD45 /* ContentTableViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,6 +28,27 @@
 			proxyType = 2;
 			remoteGlobalIDString = 2C59CF162B20DD790048363D;
 			remoteInfo = Spreadsheet;
+		};
+		2C74875A2B21D42D001D134B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C7487552B21D42D001D134B /* LibCSV.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2C74871E2B2103E5001D134B;
+			remoteInfo = LibCSV;
+		};
+		2C74875C2B21D42D001D134B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C7487552B21D42D001D134B /* LibCSV.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2C7487472B21CEB4001D134B;
+			remoteInfo = LibCSVTests;
+		};
+		2CF6A42D2B264DD7004FAD45 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2C59CF882B20E9780048363D /* Spreadsheet.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 2CF6A41B2B261A10004FAD45;
+			remoteInfo = SpreadsheetTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -35,6 +60,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				2C59CF8F2B20E9970048363D /* Spreadsheet.framework in Embed Frameworks */,
+				2C74875F2B21D43E001D134B /* LibCSV.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -43,6 +69,8 @@
 
 /* Begin PBXFileReference section */
 		2C59CF882B20E9780048363D /* Spreadsheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Spreadsheet.xcodeproj; path = Lib/spreadsheet/Spreadsheet.xcodeproj; sourceTree = "<group>"; };
+		2C7487552B21D42D001D134B /* LibCSV.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LibCSV.xcodeproj; path = Lib/LibCSV/LibCSV.xcodeproj; sourceTree = "<group>"; };
+		2C7487612B21D4DD001D134B /* test.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.csv; sourceTree = "<group>"; };
 		2C917CD72B20DB53005FCFB1 /* Commatoze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Commatoze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C917CDA2B20DB53005FCFB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C917CDC2B20DB53005FCFB1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +80,7 @@
 		2C917CE62B20DB54005FCFB1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2C917CE82B20DB54005FCFB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C917CEE2B20DB68005FCFB1 /* Commatoze.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commatoze.entitlements; sourceTree = "<group>"; };
+		2CF6A42F2B264DF2004FAD45 /* ContentTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTableViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +89,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2C59CF8E2B20E9970048363D /* Spreadsheet.framework in Frameworks */,
+				2C74875E2B21D43E001D134B /* LibCSV.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -69,6 +99,7 @@
 		2C59CF872B20E9700048363D /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				2C7487552B21D42D001D134B /* LibCSV.xcodeproj */,
 				2C59CF882B20E9780048363D /* Spreadsheet.xcodeproj */,
 			);
 			name = Lib;
@@ -78,6 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				2C59CF8D2B20E9780048363D /* Spreadsheet.framework */,
+				2CF6A42E2B264DD7004FAD45 /* SpreadsheetTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -85,6 +117,7 @@
 		2C59CF912B20E9BD0048363D /* ContentTable */ = {
 			isa = PBXGroup;
 			children = (
+				2CF6A4282B264DD7004FAD45 /* ViewModel */,
 				2C59CF922B20E9D80048363D /* View */,
 			);
 			path = ContentTable;
@@ -97,6 +130,24 @@
 				2C917CDE2B20DB53005FCFB1 /* ContentTableViewController.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		2C7487562B21D42D001D134B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2C74875B2B21D42D001D134B /* LibCSV.framework */,
+				2C74875D2B21D42D001D134B /* LibCSVTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2C7487602B21D4AB001D134B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2C917CE32B20DB54005FCFB1 /* Assets.xcassets */,
+				2C7487612B21D4DD001D134B /* test.csv */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		2C917CCE2B20DB53005FCFB1 = {
@@ -120,13 +171,13 @@
 		2C917CD92B20DB53005FCFB1 /* Commatoze */ = {
 			isa = PBXGroup;
 			children = (
-				2C59CF912B20E9BD0048363D /* ContentTable */,
-				2C917CEE2B20DB68005FCFB1 /* Commatoze.entitlements */,
 				2C917CDA2B20DB53005FCFB1 /* AppDelegate.swift */,
-				2C917CDC2B20DB53005FCFB1 /* SceneDelegate.swift */,
-				2C917CE32B20DB54005FCFB1 /* Assets.xcassets */,
-				2C917CE52B20DB54005FCFB1 /* LaunchScreen.storyboard */,
+				2C917CEE2B20DB68005FCFB1 /* Commatoze.entitlements */,
+				2C59CF912B20E9BD0048363D /* ContentTable */,
 				2C917CE82B20DB54005FCFB1 /* Info.plist */,
+				2C917CE52B20DB54005FCFB1 /* LaunchScreen.storyboard */,
+				2C7487602B21D4AB001D134B /* Resources */,
+				2C917CDC2B20DB53005FCFB1 /* SceneDelegate.swift */,
 			);
 			path = Commatoze;
 			sourceTree = "<group>";
@@ -136,6 +187,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2CF6A4282B264DD7004FAD45 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2CF6A42F2B264DF2004FAD45 /* ContentTableViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -187,6 +246,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 2C7487562B21D42D001D134B /* Products */;
+					ProjectRef = 2C7487552B21D42D001D134B /* LibCSV.xcodeproj */;
+				},
+				{
 					ProductGroup = 2C59CF892B20E9780048363D /* Products */;
 					ProjectRef = 2C59CF882B20E9780048363D /* Spreadsheet.xcodeproj */;
 				},
@@ -206,6 +269,27 @@
 			remoteRef = 2C59CF8C2B20E9780048363D /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		2C74875B2B21D42D001D134B /* LibCSV.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = LibCSV.framework;
+			remoteRef = 2C74875A2B21D42D001D134B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2C74875D2B21D42D001D134B /* LibCSVTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = LibCSVTests.xctest;
+			remoteRef = 2C74875C2B21D42D001D134B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		2CF6A42E2B264DD7004FAD45 /* SpreadsheetTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SpreadsheetTests.xctest;
+			remoteRef = 2CF6A42D2B264DD7004FAD45 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
@@ -215,6 +299,7 @@
 			files = (
 				2C917CE72B20DB54005FCFB1 /* LaunchScreen.storyboard in Resources */,
 				2C917CE42B20DB54005FCFB1 /* Assets.xcassets in Resources */,
+				2C7487622B21D4DD001D134B /* test.csv in Resources */,
 				2C917CE22B20DB53005FCFB1 /* ContentTable.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -228,6 +313,7 @@
 			files = (
 				2C917CDF2B20DB53005FCFB1 /* ContentTableViewController.swift in Sources */,
 				2C917CDB2B20DB53005FCFB1 /* AppDelegate.swift in Sources */,
+				2CF6A4302B264DF2004FAD45 /* ContentTableViewModel.swift in Sources */,
 				2C917CDD2B20DB53005FCFB1 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

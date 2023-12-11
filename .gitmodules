@@ -4,3 +4,6 @@
 [submodule "Lib/spreadsheet"]
 	path = Lib/spreadsheet
 	url = https://github.com/dmitriy-shmilo/spreadsheet
+[submodule "Lib/LibCSV"]
+	path = Lib/LibCSV
+	url = https://github.com/dmitriy-shmilo/LibCSV

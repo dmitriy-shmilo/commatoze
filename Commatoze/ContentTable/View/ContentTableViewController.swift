@@ -2,27 +2,42 @@
 
 import UIKit
 import Spreadsheet
+import Combine
 
 class ContentTableViewController: UIViewController, UIDocumentPickerDelegate {
 	@IBOutlet private weak var sheet: SheetView!
 
-	let columnCount = 20
-	let rowCount = 50
-
-	var data = [String]()
+	private let viewModel = ContentTableViewModel()
+	private var subscriptions = Set<AnyCancellable>()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-		for y in 0..<rowCount {
-			for x in 0..<columnCount {
-				data.append("Col: \(x), Row: \(y)")
-			}
-		}
 
 		sheet.register(SheetViewTextCell.self, forCellReuseIdentifier: "cell")
+		sheet.register(SheetViewTextCell.self, forCellReuseIdentifier: "top")
+		sheet.register(SheetViewTextCell.self, forCellReuseIdentifier: "left")
 		sheet.dataSource = self
 		sheet.delegate = self
-		sheet.reloadData()
+
+		viewModel.currentFile
+			.sink { [weak self] _ in
+				self?.sheet.reloadData()
+			}
+			.store(in: &subscriptions)
+
+		viewModel.cellChanged
+			.sink { [weak self] index in
+				self?.sheet.reloadCellAt(index: index)
+			}
+			.store(in: &subscriptions)
+	}
+
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		guard let url = Bundle.main.url(forResource: "test", withExtension: ".csv") else {
+			return
+		}
+		viewModel.readFile(url: url)
 	}
 }
 
@@ -45,18 +60,18 @@ extension ContentTableViewController: SheetDataSource {
 	}
 
 	func sheetNumberOfColumns(_ sheet: SheetView) -> Int {
-		return columnCount
+		return viewModel.columns.value.count
 	}
 
 	func sheetNumberOfRows(_ sheet: SheetView) -> Int {
-		return rowCount
+		return viewModel.rows.value.count
 	}
 
 	func sheet(_ sheet: SheetView, cellFor index: SheetIndex) -> SheetViewCell {
 		guard let cell = sheet.dequeueReusableCell(withIdentifier: "cell") as? SheetViewTextCell else {
 			return .init()
 		}
-		let datum = data[index.index]
+		let datum = viewModel.data.value[index.index]
 
 		cell.label.text = datum
 		cell.label.font = .systemFont(ofSize: 16.0)
@@ -71,11 +86,11 @@ extension ContentTableViewController: SheetDataSource {
 	}
 
 	func sheet(_ sheet: SheetView, cellForFixedRowAt index: SheetIndex, in area: SheetViewArea) -> SheetViewCell {
-		guard let cell = sheet.dequeueReusableCell(withIdentifier: "cell") as? SheetViewTextCell else {
+		guard let cell = sheet.dequeueReusableCell(withIdentifier: "top") as? SheetViewTextCell else {
 			return .init()
 		}
 
-		cell.label.text = "\(index.col)"
+		cell.label.text = viewModel.columns.value[index.col]
 		cell.label.font = .boldSystemFont(ofSize: 16.0)
 		cell.label.textColor = .secondaryLabel
 		cell.normalBackgroundColor = .secondarySystemBackground
@@ -84,13 +99,13 @@ extension ContentTableViewController: SheetDataSource {
 	}
 
 	func sheet(_ sheet: SheetView, cellForFixedColumnAt index: SheetIndex, in area: SheetViewArea) -> SheetViewCell {
-		guard let cell = sheet.dequeueReusableCell(withIdentifier: "cell") as? SheetViewTextCell else {
+		guard let cell = sheet.dequeueReusableCell(withIdentifier: "left") as? SheetViewTextCell else {
 			return .init()
 		}
 		cell.label.textAlignment = .center
 		cell.label.textColor = .secondaryLabel
 		cell.label.font = .boldSystemFont(ofSize: 16.0)
-		cell.label.text = "\(index.row)"
+		cell.label.text = viewModel.rows.value[index.row]
 
 		if index.row % 2 == 0 {
 			cell.normalBackgroundColor = .secondarySystemBackground
@@ -102,13 +117,9 @@ extension ContentTableViewController: SheetDataSource {
 	}
 }
 
-extension ContentTableViewController: SheetViewDelegate {
-	func sheet(_ sheet: SheetView, shouldEditCellAt index: SheetIndex) -> Bool {
-		return true
-	}
-	
+extension ContentTableViewController: SheetViewDelegate {	
 	func sheet(_ sheet: SheetView, editorCellFor index: SheetIndex) -> UIView? {
-		let datum = data[index.index]
+		let datum = viewModel.data.value[index.index]
 		let cell = UITextView()
 		cell.text = datum
 		cell.isEditable = true
@@ -120,7 +131,6 @@ extension ContentTableViewController: SheetViewDelegate {
 	}
 
 	func sheet(_ sheet: SheetView, didEndEditingCellAt index: SheetIndex, with editor: UIView) {
-		data[index.index] = (editor as? UITextView)?.text ?? ""
-		sheet.reloadCellAt(index: index)
+		viewModel.setField(at: index, to: (editor as? UITextView)?.text ?? "")
 	}
 }
