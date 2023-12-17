@@ -64,6 +64,13 @@ class ContentTableViewModel {
 		}
 		cellChanged.send(index)
 	}
+
+	func getField(at index: SheetIndex) -> String {
+		guard index.index >= 0 && index.index < data.value.count else {
+			return ""
+		}
+		return data.value[index.index]
+	}
 }
 
 extension ContentTableViewModel: CSVReaderDelegate {

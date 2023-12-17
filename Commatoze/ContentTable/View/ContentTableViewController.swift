@@ -7,15 +7,16 @@ import Combine
 class ContentTableViewController: UIViewController, UIDocumentPickerDelegate {
 	@IBOutlet private weak var sheet: SheetView!
 
-	private let viewModel = ContentTableViewModel()
+	let viewModel = ContentTableViewModel()
+
 	private var subscriptions = Set<AnyCancellable>()
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		sheet.register(SheetViewTextCell.self, forCellReuseIdentifier: "cell")
-		sheet.register(SheetViewTextCell.self, forCellReuseIdentifier: "top")
-		sheet.register(SheetViewTextCell.self, forCellReuseIdentifier: "left")
+		sheet.register(SheetViewLabelCell.self, forCellReuseIdentifier: "cell")
+		sheet.register(SheetViewLabelCell.self, forCellReuseIdentifier: "top")
+		sheet.register(SheetViewLabelCell.self, forCellReuseIdentifier: "left")
 		sheet.dataSource = self
 		sheet.delegate = self
 
@@ -39,98 +40,80 @@ class ContentTableViewController: UIViewController, UIDocumentPickerDelegate {
 		}
 		viewModel.readFile(url: url)
 	}
-}
 
-extension ContentTableViewController: SheetDataSource {
-	
-	func sheetNumberOfFixedRows(_ sheet: SheetView, in area: SheetViewArea) -> Int {
-		return 1
-	}
-
-	func sheetNumberOfFixedColumns(_ sheet: SheetView, in area: SheetViewArea) -> Int {
-		return 1
-	}
-
-	func sheetColumnWidth(_ sheet: SheetView, at index: Int) -> CGFloat {
-		return 150.0
-	}
-
-	func sheetRowHeight(_ sheet: SheetView, at index: Int) -> CGFloat {
-		return 75.0
-	}
-
-	func sheetNumberOfColumns(_ sheet: SheetView) -> Int {
-		return viewModel.columns.value.count
-	}
-
-	func sheetNumberOfRows(_ sheet: SheetView) -> Int {
-		return viewModel.rows.value.count
-	}
-
-	func sheet(_ sheet: SheetView, cellFor index: SheetIndex) -> SheetViewCell {
-		guard let cell = sheet.dequeueReusableCell(withIdentifier: "cell") as? SheetViewTextCell else {
-			return .init()
+	// MARK: - Menu Overrides
+	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+		let selectionActions = [
+			#selector(cutAction(_:)),
+			#selector(copyAction(_:)),
+			#selector(pasteAction(_:)),
+			#selector(deleteAction(_:)),
+		]
+		if selectionActions.contains(action) {
+			return sheet.currentSelection
+				.topLeft(in: sheet)
+				.firstIndex(in: sheet) != .invalid
 		}
-		let datum = viewModel.data.value[index.index]
-
-		cell.label.text = datum
-		cell.label.font = .systemFont(ofSize: 16.0)
-		cell.label.textColor = .secondaryLabel
-		cell.normalBackgroundColor = .systemBackground
-		cell.selectedBackgroundColor = .systemBlue.withAlphaComponent(0.3)
-		return cell
+		return super.canPerformAction(action, withSender: sender)
 	}
 
-	func sheetNumberOfFixedTopRows(_ sheet: SheetView) -> Int {
-		return 1
-	}
-
-	func sheet(_ sheet: SheetView, cellForFixedRowAt index: SheetIndex, in area: SheetViewArea) -> SheetViewCell {
-		guard let cell = sheet.dequeueReusableCell(withIdentifier: "top") as? SheetViewTextCell else {
-			return .init()
+	override func copy(_ sender: Any?) {
+		let topLeft = sheet.currentSelection.topLeft(in: sheet).firstIndex(in: sheet)
+		guard topLeft != .invalid else {
+			return
 		}
 
-		cell.label.text = viewModel.columns.value[index.col]
-		cell.label.font = .boldSystemFont(ofSize: 16.0)
-		cell.label.textColor = .secondaryLabel
-		cell.normalBackgroundColor = .secondarySystemBackground
-
-		return cell
+		UIPasteboard.general.string = viewModel.getField(at: topLeft)
 	}
 
-	func sheet(_ sheet: SheetView, cellForFixedColumnAt index: SheetIndex, in area: SheetViewArea) -> SheetViewCell {
-		guard let cell = sheet.dequeueReusableCell(withIdentifier: "left") as? SheetViewTextCell else {
-			return .init()
+	override func paste(_ sender: Any?) {
+		guard let value = UIPasteboard.general.string,
+			  value.count > 0 else {
+			return
 		}
-		cell.label.textAlignment = .center
-		cell.label.textColor = .secondaryLabel
-		cell.label.font = .boldSystemFont(ofSize: 16.0)
-		cell.label.text = viewModel.rows.value[index.row]
-
-		if index.row % 2 == 0 {
-			cell.normalBackgroundColor = .secondarySystemBackground
-		} else {
-			cell.normalBackgroundColor = .tertiarySystemBackground
+		let topLeft = sheet.currentSelection.topLeft(in: sheet).firstIndex(in: sheet)
+		guard topLeft != .invalid else {
+			return
 		}
 
-		return cell
+		viewModel.setField(at: topLeft, to: value)
+	}
+
+	override func delete(_ sender: Any?) {
+		let topLeft = sheet.currentSelection.topLeft(in: sheet).firstIndex(in: sheet)
+		guard topLeft != .invalid else {
+			return
+		}
+
+		viewModel.setField(at: topLeft, to: "")
+	}
+
+	override func cut(_ sender: Any?) {
+		let topLeft = sheet.currentSelection.topLeft(in: sheet).firstIndex(in: sheet)
+		guard topLeft != .invalid else {
+			return
+		}
+
+		UIPasteboard.general.string = viewModel.getField(at: topLeft)
+		viewModel.setField(at: topLeft, to: "")
 	}
 }
 
-extension ContentTableViewController: SheetViewDelegate {	
-	func sheet(_ sheet: SheetView, editorCellFor index: SheetIndex) -> UIView? {
-		let datum = viewModel.data.value[index.index]
-		let cell = UITextView()
-		cell.text = datum
-		cell.isEditable = true
-		cell.layer.borderColor = UIColor.systemBlue.cgColor
-		cell.backgroundColor = .tertiarySystemBackground
-		cell.textColor = .label
-		cell.font = .systemFont(ofSize: 16.0)
-		return cell
+// MARK: - Menu Actions
+extension ContentTableViewController {
+	@objc func copyAction(_ sender: UICommand) {
+		copy(self)
 	}
 
-	func sheet(_ sheet: SheetView, didEndEditingCellAt index: SheetIndex, with editor: UIView) {
-		viewModel.setField(at: index, to: (editor as? UITextView)?.text ?? "")
+	@objc func pasteAction(_ sender: UICommand) {
+		paste(self)
+	}
+
+	@objc func cutAction(_ sender: UICommand) {
+		cut(self)
+	}
+
+	@objc func deleteAction(_ sender: UICommand) {
+		delete(self)
 	}
 }
