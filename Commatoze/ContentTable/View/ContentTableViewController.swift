@@ -8,6 +8,7 @@ class ContentTableViewController: UIViewController, UIDocumentPickerDelegate {
 	@IBOutlet private weak var sheet: SheetView!
 
 	let viewModel = ContentTableViewModel()
+	var currentEditor: UITextView?
 
 	private var subscriptions = Set<AnyCancellable>()
 
@@ -41,6 +42,39 @@ class ContentTableViewController: UIViewController, UIDocumentPickerDelegate {
 		viewModel.readFile(url: url)
 	}
 
+	override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
+		guard let press = presses.first,
+			  let code =  press.key?.keyCode else {
+			super.pressesBegan(presses, with: event)
+			return
+		}
+
+		let topLeft = sheet.currentSelection.topLeft(in: sheet)
+		let cellIndex = topLeft.firstIndex(in: sheet)
+		guard cellIndex != .invalid else {
+			super.pressesBegan(presses, with: event)
+			return
+		}
+
+		if currentEditor == nil && (code == .keyboardReturnOrEnter || code == .keypadEnter) {
+			sheet.setSelection(topLeft)
+			sheet.editCellAt(cellIndex)
+			return
+		}
+
+		if let text = press.key?.characters,
+			currentEditor == nil && text.count > 0 && text.allSatisfy({
+				$0.isLetter || $0.isNumber || $0.isPunctuation || $0.isWhitespace
+		}) {
+			sheet.setSelection(topLeft)
+			sheet.editCellAt(cellIndex)
+			currentEditor?.text = text
+			return
+		}
+
+		super.pressesBegan(presses, with: event)
+	}
+
 	// MARK: - Menu Overrides
 	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
 		let selectionActions = [
@@ -50,7 +84,8 @@ class ContentTableViewController: UIViewController, UIDocumentPickerDelegate {
 			#selector(deleteAction(_:)),
 		]
 		if selectionActions.contains(action) {
-			return sheet.currentSelection
+			return currentEditor == nil
+			&& sheet.currentSelection
 				.topLeft(in: sheet)
 				.firstIndex(in: sheet) != .invalid
 		}
@@ -96,6 +131,21 @@ class ContentTableViewController: UIViewController, UIDocumentPickerDelegate {
 
 		UIPasteboard.general.string = viewModel.getField(at: topLeft)
 		viewModel.setField(at: topLeft, to: "")
+	}
+
+	func closeCellEditor(
+		_ editor: ContentTextEditorView,
+		at index: SheetIndex,
+		andConfirm confirm: Bool
+	) {
+		guard currentEditor == editor else {
+			return
+		}
+		if let text = editor.text, confirm {
+			viewModel.setField(at: index, to: text)
+		}
+		currentEditor = nil
+		sheet.endEditCell()
 	}
 }
 

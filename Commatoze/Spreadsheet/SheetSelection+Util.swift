@@ -11,8 +11,18 @@ extension SheetSelection {
 			let left = indices.map { $0.col }.reduce(Int.max, min)
 			let top = indices.map { $0.row }.reduce(Int.max, min)
 			return .singleCell(with: sheet.makeIndex(left, top))
+		case .columnSet(let indices):
+			let left = indices.reduce(Int.max, min)
+			return .singleCell(with: sheet.makeIndex(left, 0))
+		case .columnRange(let from, _):
+			return .singleCell(with: sheet.makeIndex(from, 0))
+		case .rowSet(let indices):
+			let top = indices.reduce(Int.max, min)
+			return .singleCell(with: sheet.makeIndex(0, top))
+		case .rowRange(let from, _):
+			return .singleCell(with: sheet.makeIndex(0, from))
 		default:
-			return .singleCell(with: .invalid)
+			return .none
 		}
 	}
 
