@@ -3,6 +3,16 @@
 import UIKit
 
 struct MainMenu {
+	static func fileMenu() -> [UIMenuElement] {
+		let open = UIKeyCommand(
+			title: NSLocalizedString("Open", comment: "Open"),
+			action: #selector(ContentTableViewController.openAction(_:)),
+			input: "o",
+			modifierFlags: .command)
+
+		return [open]
+	}
+
 	static func editMenu() -> [UIMenuElement] {
 		let cut = UIKeyCommand(
 			title: NSLocalizedString("Cut", comment: "Cut"),

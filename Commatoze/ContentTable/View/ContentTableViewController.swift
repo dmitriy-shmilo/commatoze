@@ -4,7 +4,7 @@ import UIKit
 import Spreadsheet
 import Combine
 
-class ContentTableViewController: UIViewController, UIDocumentPickerDelegate {
+class ContentTableViewController: UIViewController {
 	@IBOutlet private weak var sheet: SheetView!
 
 	let viewModel = ContentTableViewModel()
@@ -15,27 +15,13 @@ class ContentTableViewController: UIViewController, UIDocumentPickerDelegate {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
-		sheet.register(SheetViewLabelCell.self, forCellReuseIdentifier: "cell")
-		sheet.register(SheetViewLabelCell.self, forCellReuseIdentifier: "top")
-		sheet.register(SheetViewLabelCell.self, forCellReuseIdentifier: "left")
-		sheet.dataSource = self
-		sheet.delegate = self
-
-		viewModel.currentFile
-			.sink { [weak self] _ in
-				self?.sheet.reloadData()
-			}
-			.store(in: &subscriptions)
-
-		viewModel.cellChanged
-			.sink { [weak self] index in
-				self?.sheet.reloadCellAt(index: index)
-			}
-			.store(in: &subscriptions)
+		setupSheet()
+		setupCurrentFile()
+		setupCells()
 	}
 
-	override func viewWillAppear(_ animated: Bool) {
-		super.viewWillAppear(animated)
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
 		guard let url = Bundle.main.url(forResource: "test", withExtension: ".csv") else {
 			return
 		}
@@ -147,10 +133,57 @@ class ContentTableViewController: UIViewController, UIDocumentPickerDelegate {
 		currentEditor = nil
 		sheet.endEditCell()
 	}
+
+	func beginOpenFile() {
+		let controller = UIDocumentPickerViewController(
+			documentTypes: ["public.text"],
+			in: .open)
+		// TODO: allow opening multiple documents
+		controller.allowsMultipleSelection = false
+		controller.delegate = self
+		present(controller, animated: true)
+	}
+
+	// MARK: - Setup
+	private func setupSheet() {
+		sheet.register(SheetViewLabelCell.self, forCellReuseIdentifier: "cell")
+		sheet.register(SheetViewLabelCell.self, forCellReuseIdentifier: "top")
+		sheet.register(SheetViewLabelCell.self, forCellReuseIdentifier: "left")
+		sheet.dataSource = self
+		sheet.delegate = self
+	}
+
+	private func setupCurrentFile() {
+		viewModel.currentFile
+			.sink { [weak self] _ in
+				self?.sheet.reloadData()
+			}
+			.store(in: &subscriptions)
+
+		viewModel.currentFileName
+			.sink { [weak self] name in
+				self?.view?.window?.windowScene?.title = name
+			}
+			.store(in: &subscriptions)
+	}
+
+	private func setupCells() {
+		viewModel.cellChanged
+			.sink { [weak self] index in
+				self?.sheet.reloadCellAt(index: index)
+			}
+			.store(in: &subscriptions)
+	}
 }
 
 // MARK: - Menu Actions
 extension ContentTableViewController {
+	// MARK: - File
+	@objc func openAction(_ sender: UICommand) {
+		beginOpenFile()
+	}
+
+	// MARK: - Edit
 	@objc func copyAction(_ sender: UICommand) {
 		copy(self)
 	}

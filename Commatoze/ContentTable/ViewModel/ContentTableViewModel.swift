@@ -13,6 +13,7 @@ class ContentTableViewModel {
 	let columns = CurrentValueSubject<[String], Never>([String]())
 	let rows = CurrentValueSubject<[String], Never>([String]())
 	let currentFile = CurrentValueSubject<URL?, Never>(nil)
+	let currentFileName = CurrentValueSubject<String, Never>("")
 
 	private var subscriptions = Set<AnyCancellable>()
 
@@ -26,18 +27,8 @@ class ContentTableViewModel {
 	init() {
 		parser.delegate = self
 
-		data.combineLatest(columns)
-			.map { (data, columns) in
-				guard data.count > 0, columns.count > 0 else {
-					return []
-				}
-
-				return (0..<(data.count / columns.count)).map {
-					return "\($0)"
-				}
-			}
-			.assign(to: \.value, on: rows)
-			.store(in: &subscriptions)
+		setupData()
+		setupFileUrl()
 	}
 
 	func readFile(url: URL) {
@@ -45,6 +36,7 @@ class ContentTableViewModel {
 			return
 		}
 		do {
+			readingHeader = true
 			rawUrl = url
 			rawData = []
 			rawColumns = []
@@ -70,6 +62,34 @@ class ContentTableViewModel {
 			return ""
 		}
 		return data.value[index.index]
+	}
+
+	// MARK: - Setup
+	private func setupData() {
+		data.combineLatest(columns)
+			.map { (data, columns) in
+				guard data.count > 0, columns.count > 0 else {
+					return []
+				}
+
+				return (0..<(data.count / columns.count)).map {
+					return "\($0)"
+				}
+			}
+			.assign(to: \.value, on: rows)
+			.store(in: &subscriptions)
+	}
+
+	private func setupFileUrl() {
+		currentFile
+			.map {
+				guard let url = $0, url.lastPathComponent != "" else {
+					return NSLocalizedString("Untitled", comment: "")
+				}
+				return url.lastPathComponent
+			}
+			.assign(to: \.value, on: currentFileName)
+			.store(in: &subscriptions)
 	}
 }
 

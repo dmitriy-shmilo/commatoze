@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		2C20A8782B3010BD00225EA3 /* ContentTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20A8772B3010BD00225EA3 /* ContentTextEditorView.swift */; };
 		2C20A87E2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20A87D2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift */; };
+		2C20A8802B30368900225EA3 /* ContentTableViewController+UIDocumentPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20A87F2B30368900225EA3 /* ContentTableViewController+UIDocumentPickerDelegate.swift */; };
 		2C59CF8E2B20E9970048363D /* Spreadsheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C59CF8D2B20E9780048363D /* Spreadsheet.framework */; };
 		2C59CF8F2B20E9970048363D /* Spreadsheet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C59CF8D2B20E9780048363D /* Spreadsheet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C70E6A02B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C70E69F2B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift */; };
@@ -76,6 +77,7 @@
 /* Begin PBXFileReference section */
 		2C20A8772B3010BD00225EA3 /* ContentTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTextEditorView.swift; sourceTree = "<group>"; };
 		2C20A87D2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+ContentTextEditorViewDelegate.swift"; sourceTree = "<group>"; };
+		2C20A87F2B30368900225EA3 /* ContentTableViewController+UIDocumentPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+UIDocumentPickerDelegate.swift"; sourceTree = "<group>"; };
 		2C59CF882B20E9780048363D /* Spreadsheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Spreadsheet.xcodeproj; path = Lib/spreadsheet/Spreadsheet.xcodeproj; sourceTree = "<group>"; };
 		2C70E69F2B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+SheetViewDataSource.swift"; sourceTree = "<group>"; };
 		2C70E6A12B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+SheetViewDelegate.swift"; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 				2C20A87D2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift */,
 				2C70E69F2B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift */,
 				2C70E6A12B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift */,
+				2C20A87F2B30368900225EA3 /* ContentTableViewController+UIDocumentPickerDelegate.swift */,
 				2C20A8772B3010BD00225EA3 /* ContentTextEditorView.swift */,
 				2C70E6A62B2F370900B82168 /* MainMenu.swift */,
 			);
@@ -346,6 +349,7 @@
 				2C70E6A02B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift in Sources */,
 				2CF6A4302B264DF2004FAD45 /* ContentTableViewModel.swift in Sources */,
 				2C917CDD2B20DB53005FCFB1 /* SceneDelegate.swift in Sources */,
+				2C20A8802B30368900225EA3 /* ContentTableViewController+UIDocumentPickerDelegate.swift in Sources */,
 				2C70E6A42B2F299000B82168 /* SheetSelection+Util.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
