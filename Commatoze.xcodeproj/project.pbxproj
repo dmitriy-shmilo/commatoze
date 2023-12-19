@@ -10,6 +10,7 @@
 		2C20A8782B3010BD00225EA3 /* ContentTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20A8772B3010BD00225EA3 /* ContentTextEditorView.swift */; };
 		2C20A87E2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20A87D2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift */; };
 		2C20A8802B30368900225EA3 /* ContentTableViewController+UIDocumentPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20A87F2B30368900225EA3 /* ContentTableViewController+UIDocumentPickerDelegate.swift */; };
+		2C2A084B2B319D7C0087210B /* CurrentValueSubject+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2A084A2B319D7C0087210B /* CurrentValueSubject+Init.swift */; };
 		2C59CF8E2B20E9970048363D /* Spreadsheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C59CF8D2B20E9780048363D /* Spreadsheet.framework */; };
 		2C59CF8F2B20E9970048363D /* Spreadsheet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C59CF8D2B20E9780048363D /* Spreadsheet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C70E6A02B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C70E69F2B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift */; };
@@ -78,6 +79,7 @@
 		2C20A8772B3010BD00225EA3 /* ContentTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTextEditorView.swift; sourceTree = "<group>"; };
 		2C20A87D2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+ContentTextEditorViewDelegate.swift"; sourceTree = "<group>"; };
 		2C20A87F2B30368900225EA3 /* ContentTableViewController+UIDocumentPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+UIDocumentPickerDelegate.swift"; sourceTree = "<group>"; };
+		2C2A084A2B319D7C0087210B /* CurrentValueSubject+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrentValueSubject+Init.swift"; sourceTree = "<group>"; };
 		2C59CF882B20E9780048363D /* Spreadsheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Spreadsheet.xcodeproj; path = Lib/spreadsheet/Spreadsheet.xcodeproj; sourceTree = "<group>"; };
 		2C70E69F2B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+SheetViewDataSource.swift"; sourceTree = "<group>"; };
 		2C70E6A12B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+SheetViewDelegate.swift"; sourceTree = "<group>"; };
@@ -110,6 +112,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C2A08452B319D6F0087210B /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				2C2A084A2B319D7C0087210B /* CurrentValueSubject+Init.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
 		2C59CF872B20E9700048363D /* Lib */ = {
 			isa = PBXGroup;
 			children = (
@@ -199,6 +209,7 @@
 		2C917CD92B20DB53005FCFB1 /* Commatoze */ = {
 			isa = PBXGroup;
 			children = (
+				2C2A08452B319D6F0087210B /* Core */,
 				2C917CDA2B20DB53005FCFB1 /* AppDelegate.swift */,
 				2C917CEE2B20DB68005FCFB1 /* Commatoze.entitlements */,
 				2C59CF912B20E9BD0048363D /* ContentTable */,
@@ -340,6 +351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C2A084B2B319D7C0087210B /* CurrentValueSubject+Init.swift in Sources */,
 				2C917CDF2B20DB53005FCFB1 /* ContentTableViewController.swift in Sources */,
 				2C70E6A22B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift in Sources */,
 				2C917CDB2B20DB53005FCFB1 /* AppDelegate.swift in Sources */,

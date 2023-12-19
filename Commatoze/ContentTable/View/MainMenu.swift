@@ -14,6 +14,18 @@ struct MainMenu {
 	}
 
 	static func editMenu() -> [UIMenuElement] {
+		let undo = UIKeyCommand(
+			title: NSLocalizedString("Undo", comment: "Undo"),
+			action: #selector(ContentTableViewController.undoAction(_:)),
+			input: "z",
+			modifierFlags: .command)
+		let redo = UIKeyCommand(
+			title: NSLocalizedString("Redo", comment: "Redo"),
+			action: #selector(ContentTableViewController.redoAction(_:)),
+			input: "z",
+			modifierFlags: [.command, .shift])
+		let undoMenu = UIMenu(options: .displayInline, children: [undo, redo])
+
 		let cut = UIKeyCommand(
 			title: NSLocalizedString("Cut", comment: "Cut"),
 			action: #selector(ContentTableViewController.cutAction(_:)),
@@ -34,7 +46,8 @@ struct MainMenu {
 			action: #selector(ContentTableViewController.deleteAction(_:)),
 			input: "\u{8}",
 			modifierFlags: .command)
+		let editMenu = UIMenu(options: .displayInline, children: [cut, copy, paste, delete])
 
-		return [cut, copy, paste, delete]
+		return [undoMenu, editMenu]
 	}
 }

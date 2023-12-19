@@ -8,13 +8,17 @@ import Spreadsheet
 
 class ContentTableViewModel {
 	let cellChanged = PassthroughSubject<SheetIndex, Never>()
+	let undoStackChanged = PassthroughSubject<Void, Never>()
 
-	let data = CurrentValueSubject<[String], Never>([String]())
-	let columns = CurrentValueSubject<[String], Never>([String]())
-	let rows = CurrentValueSubject<[String], Never>([String]())
+	let data = CurrentValueSubject(value: [String]())
+	let columns = CurrentValueSubject(value: [String]())
+	let rows = CurrentValueSubject(value: [String]())
 	let currentFile = CurrentValueSubject<URL?, Never>(nil)
-	let currentFileName = CurrentValueSubject<String, Never>("")
+	let currentFileName = CurrentValueSubject(value: "")
+	let canUndo = CurrentValueSubject(value: false)
+	let canRedo = CurrentValueSubject(value: false)
 
+	private var undoManager = UndoManager()
 	private var subscriptions = Set<AnyCancellable>()
 
 	// TODO: abstract libcsv away
@@ -26,9 +30,9 @@ class ContentTableViewModel {
 
 	init() {
 		parser.delegate = self
-
 		setupData()
 		setupFileUrl()
+		setupUndoManager()
 	}
 
 	func readFile(url: URL) {
@@ -36,10 +40,8 @@ class ContentTableViewModel {
 			return
 		}
 		do {
-			readingHeader = true
+			reset()
 			rawUrl = url
-			rawData = []
-			rawColumns = []
 			// TODO: load in background
 			try parser.parse(data: data)
 		} catch {
@@ -51,9 +53,15 @@ class ContentTableViewModel {
 		guard index.index >= 0 && index.index < data.value.count else {
 			return
 		}
+		let previous = data.value[index.index]
+		undoManager.registerUndo(withTarget: self) { viewModel in
+			viewModel.setField(at: index, to: previous)
+		}
 		data.value.withUnsafeMutableBufferPointer {
 			$0[index.index] = value
 		}
+
+		undoStackChanged.send()
 		cellChanged.send(index)
 	}
 
@@ -64,7 +72,33 @@ class ContentTableViewModel {
 		return data.value[index.index]
 	}
 
+	func undo() {
+		undoManager.undo()
+		undoStackChanged.send()
+	}
+
+	func redo() {
+		undoManager.redo()
+		undoStackChanged.send()
+	}
+
 	// MARK: - Setup
+	private func setupUndoManager() {
+		undoStackChanged
+			.map { [weak self] _ in
+				return self?.undoManager.canUndo ?? false
+			}
+			.assign(to: \.value, on: canUndo)
+			.store(in: &subscriptions)
+
+		undoStackChanged
+			.map { [weak self] _ in
+				return self?.undoManager.canRedo ?? false
+			}
+			.assign(to: \.value, on: canRedo)
+			.store(in: &subscriptions)
+	}
+
 	private func setupData() {
 		data.combineLatest(columns)
 			.map { (data, columns) in
@@ -90,6 +124,15 @@ class ContentTableViewModel {
 			}
 			.assign(to: \.value, on: currentFileName)
 			.store(in: &subscriptions)
+	}
+
+	// MARK: - Private Methods
+	private func reset() {
+		readingHeader = true
+		rawData = []
+		rawColumns = []
+		undoManager.removeAllActions()
+		undoStackChanged.send()
 	}
 }
 

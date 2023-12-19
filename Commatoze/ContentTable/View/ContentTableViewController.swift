@@ -75,6 +75,15 @@ class ContentTableViewController: UIViewController {
 				.topLeft(in: sheet)
 				.firstIndex(in: sheet) != .invalid
 		}
+
+		if action == #selector(undoAction(_:)) {
+			return viewModel.canUndo.value
+		}
+
+		if action == #selector(redoAction(_:)) {
+			return viewModel.canRedo.value
+		}
+
 		return super.canPerformAction(action, withSender: sender)
 	}
 
@@ -134,6 +143,7 @@ class ContentTableViewController: UIViewController {
 		sheet.endEditCell()
 	}
 
+	// MARK: - Menu Actions
 	func beginOpenFile() {
 		let controller = UIDocumentPickerViewController(
 			documentTypes: ["public.text"],
@@ -142,6 +152,20 @@ class ContentTableViewController: UIViewController {
 		controller.allowsMultipleSelection = false
 		controller.delegate = self
 		present(controller, animated: true)
+	}
+
+	func undo() {
+		guard viewModel.canUndo.value else {
+			return
+		}
+		viewModel.undo()
+	}
+
+	func redo() {
+		guard viewModel.canRedo.value else {
+			return
+		}
+		viewModel.redo()
 	}
 
 	// MARK: - Setup
@@ -184,6 +208,14 @@ extension ContentTableViewController {
 	}
 
 	// MARK: - Edit
+	@objc func undoAction(_ sender: UICommand) {
+		undo()
+	}
+
+	@objc func redoAction(_ sender: UICommand) {
+		redo()
+	}
+	
 	@objc func copyAction(_ sender: UICommand) {
 		copy(self)
 	}
