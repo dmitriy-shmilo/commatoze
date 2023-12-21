@@ -10,7 +10,17 @@ struct MainMenu {
 			input: "o",
 			modifierFlags: .command)
 
-		return [open]
+		let openMenu = UIMenu(options: .displayInline, children: [open])
+
+		let save = UIKeyCommand(
+			title: NSLocalizedString("Save", comment: "Save"),
+			action: #selector(ContentTableViewController.saveAction(_:)),
+			input: "s",
+			modifierFlags: .command)
+
+		let saveMenu = UIMenu(options: .displayInline, children: [save])
+
+		return [openMenu, saveMenu]
 	}
 
 	static func editMenu() -> [UIMenuElement] {

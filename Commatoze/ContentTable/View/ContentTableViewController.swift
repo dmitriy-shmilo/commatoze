@@ -144,7 +144,7 @@ class ContentTableViewController: UIViewController {
 	}
 
 	// MARK: - Menu Actions
-	func beginOpenFile() {
+	func openFile() {
 		let controller = UIDocumentPickerViewController(
 			documentTypes: ["public.text"],
 			in: .open)
@@ -152,6 +152,14 @@ class ContentTableViewController: UIViewController {
 		controller.allowsMultipleSelection = false
 		controller.delegate = self
 		present(controller, animated: true)
+	}
+
+	func saveFile() {
+		// TODO: show the save picker
+		guard let url = viewModel.currentFile.value else {
+			return
+		}
+		viewModel.saveFile(to: url)
 	}
 
 	func undo() {
@@ -204,7 +212,11 @@ class ContentTableViewController: UIViewController {
 extension ContentTableViewController {
 	// MARK: - File
 	@objc func openAction(_ sender: UICommand) {
-		beginOpenFile()
+		openFile()
+	}
+
+	@objc func saveAction(_ sender: UICommand) {
+		saveFile()
 	}
 
 	// MARK: - Edit
