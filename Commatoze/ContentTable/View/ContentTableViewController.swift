@@ -233,11 +233,22 @@ extension ContentTableViewController {
 	}
 
 	func updateSelectionIn(sheet: SheetView, whenKeyPressed press: UIPress) -> Bool {
-		guard let code = press.key?.keyCode else {
+		guard currentEditor == nil else {
 			return false
 		}
 
-		guard currentEditor == nil else {
+		switch sheet.currentSelection {
+		case .cellRange(_, _, _, _), .cellSet(_):
+			return updateCellSelectionIn(sheet: sheet, whenKeyPressed: press)
+		case .columnRange(_, _), .columnSet(_):
+			return updateColumnSelectionIn(sheet: sheet, whenKeyPressed: press)
+		default:
+			return false
+		}
+	}
+
+	func updateCellSelectionIn(sheet: SheetView, whenKeyPressed press: UIPress) -> Bool {
+		guard let code = press.key?.keyCode else {
 			return false
 		}
 
@@ -275,6 +286,51 @@ extension ContentTableViewController {
 				return false
 			}
 			sheet.setSelection(.singleCell(with: cellIndex))
+			sheet.scrollToCurrentSelection(animated: true)
+			return true
+		case .keyboardEscape:
+			guard topLeft != .none else {
+				return false
+			}
+			sheet.setSelection(.none)
+			return true
+		default:
+			return false
+		}
+	}
+
+	func updateColumnSelectionIn(sheet: SheetView, whenKeyPressed press: UIPress) -> Bool {
+		guard let code = press.key?.keyCode else {
+			return false
+		}
+
+		let topLeft = sheet.currentSelection.topLeft(in: sheet)
+		let topLeftIndex = topLeft.firstIndex(in: sheet)
+		let left = topLeftIndex.col
+
+		guard topLeftIndex != .invalid else {
+			return false
+		}
+
+		switch code {
+		case .keyboardDownArrow:
+			sheet.setSelection(.singleCell(with: topLeftIndex))
+			sheet.scrollToCurrentSelection(animated: true)
+			return true
+		case .keyboardLeftArrow:
+			let column = left - 1
+			guard sheet.isValid(column: column) else {
+				return false
+			}
+			sheet.setSelection(.singleColumn(with: column))
+			sheet.scrollToCurrentSelection(animated: true)
+			return true
+		case .keyboardRightArrow:
+			let column = left + 1
+			guard sheet.isValid(column: column) else {
+				return false
+			}
+			sheet.setSelection(.singleColumn(with: column))
 			sheet.scrollToCurrentSelection(animated: true)
 			return true
 		case .keyboardEscape:
