@@ -44,7 +44,7 @@ class ContentTableViewModel {
 			reset()
 			rawUrl = url
 			// TODO: load in background
-			try parser.parse(url: url)
+			try parser.parse(data: data)
 		} catch {
 			// TODO: report errors to the user
 		}

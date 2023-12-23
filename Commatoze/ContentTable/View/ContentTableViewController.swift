@@ -28,33 +28,19 @@ class ContentTableViewController: UIViewController {
 		viewModel.readFile(url: url)
 	}
 
+
+
 	override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-		guard let press = presses.first,
-			  let code =  press.key?.keyCode else {
+		guard let press = presses.first else {
 			super.pressesBegan(presses, with: event)
 			return
 		}
 
-		let topLeft = sheet.currentSelection.topLeft(in: sheet)
-		let cellIndex = topLeft.firstIndex(in: sheet)
-		guard cellIndex != .invalid else {
-			super.pressesBegan(presses, with: event)
+		if updateSelectionIn(sheet: sheet, whenKeyPressed: press) {
 			return
 		}
 
-		if currentEditor == nil && (code == .keyboardReturnOrEnter || code == .keypadEnter) {
-			sheet.setSelection(topLeft)
-			sheet.editCellAt(cellIndex)
-			return
-		}
-
-		if let text = press.key?.characters,
-			currentEditor == nil && text.count > 0 && text.allSatisfy({
-				$0.isLetter || $0.isNumber || $0.isPunctuation || $0.isWhitespace
-		}) {
-			sheet.setSelection(topLeft)
-			sheet.editCellAt(cellIndex)
-			currentEditor?.text = text
+		if startEditingCellIn(sheet: sheet, whenKeyPressed: press) {
 			return
 		}
 
@@ -205,6 +191,101 @@ class ContentTableViewController: UIViewController {
 				self?.sheet.reloadCellAt(index: index)
 			}
 			.store(in: &subscriptions)
+	}
+}
+
+extension ContentTableViewController {
+	func startEditingCellIn(sheet: SheetView, whenKeyPressed press: UIPress) -> Bool {
+		guard let code = press.key?.keyCode else {
+			return false
+		}
+
+		guard currentEditor == nil else {
+			return false
+		}
+
+		let topLeft = sheet.currentSelection.topLeft(in: sheet)
+		let cellIndex = topLeft.firstIndex(in: sheet)
+
+		guard cellIndex != .invalid else {
+			return false
+		}
+
+		if code == .keyboardReturnOrEnter || code == .keypadEnter || code == .keyboardReturn {
+			sheet.setSelection(topLeft)
+			sheet.scrollToCurrentSelection(animated: true)
+			sheet.editCellAt(cellIndex)
+			return true
+		}
+
+		if let text = press.key?.characters,
+		   text.count > 0 && text.allSatisfy({
+				$0.isLetter || $0.isNumber || $0.isPunctuation || $0.isWhitespace
+		}) {
+			sheet.setSelection(topLeft)
+			sheet.scrollToCurrentSelection(animated: true)
+			sheet.editCellAt(cellIndex)
+			currentEditor?.text = text
+			return true
+		}
+
+		return false
+	}
+
+	func updateSelectionIn(sheet: SheetView, whenKeyPressed press: UIPress) -> Bool {
+		guard let code = press.key?.keyCode else {
+			return false
+		}
+
+		guard currentEditor == nil else {
+			return false
+		}
+
+		let topLeft = sheet.currentSelection.topLeft(in: sheet)
+		let cellIndex = topLeft.firstIndex(in: sheet)
+
+		switch code {
+		case .keyboardUpArrow:
+			let cellIndex = cellIndex.indexByAdding(rows: -1, in: sheet)
+			guard cellIndex != .invalid else {
+				return false
+			}
+			sheet.setSelection(.singleCell(with: cellIndex))
+			sheet.scrollToCurrentSelection(animated: true)
+			return true
+		case .keyboardDownArrow:
+			let cellIndex = cellIndex.indexByAdding(rows: 1, in: sheet)
+			guard cellIndex != .invalid else {
+				return false
+			}
+			sheet.setSelection(.singleCell(with: cellIndex))
+			sheet.scrollToCurrentSelection(animated: true)
+			return true
+		case .keyboardLeftArrow:
+			let cellIndex = cellIndex.indexByAdding(columns: -1, in: sheet)
+			guard cellIndex != .invalid else {
+				return false
+			}
+			sheet.setSelection(.singleCell(with: cellIndex))
+			sheet.scrollToCurrentSelection(animated: true)
+			return true
+		case .keyboardRightArrow:
+			let cellIndex = cellIndex.indexByAdding(columns: 1, in: sheet)
+			guard cellIndex != .invalid else {
+				return false
+			}
+			sheet.setSelection(.singleCell(with: cellIndex))
+			sheet.scrollToCurrentSelection(animated: true)
+			return true
+		case .keyboardEscape:
+			guard topLeft != .none else {
+				return false
+			}
+			sheet.setSelection(.none)
+			return true
+		default:
+			return false
+		}
 	}
 }
 

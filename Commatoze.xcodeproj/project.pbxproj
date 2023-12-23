@@ -20,6 +20,7 @@
 		2C74875E2B21D43E001D134B /* LibCSV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C74875B2B21D42D001D134B /* LibCSV.framework */; };
 		2C74875F2B21D43E001D134B /* LibCSV.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C74875B2B21D42D001D134B /* LibCSV.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C7487622B21D4DD001D134B /* test.csv in Resources */ = {isa = PBXBuildFile; fileRef = 2C7487612B21D4DD001D134B /* test.csv */; };
+		2C8ABFDC2B32D96F00C7330B /* SheetIndex+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8ABFDB2B32D96F00C7330B /* SheetIndex+Util.swift */; };
 		2C917CDB2B20DB53005FCFB1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C917CDA2B20DB53005FCFB1 /* AppDelegate.swift */; };
 		2C917CDD2B20DB53005FCFB1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C917CDC2B20DB53005FCFB1 /* SceneDelegate.swift */; };
 		2C917CDF2B20DB53005FCFB1 /* ContentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C917CDE2B20DB53005FCFB1 /* ContentTableViewController.swift */; };
@@ -87,6 +88,7 @@
 		2C70E6A62B2F370900B82168 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		2C7487552B21D42D001D134B /* LibCSV.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LibCSV.xcodeproj; path = Lib/LibCSV/LibCSV.xcodeproj; sourceTree = "<group>"; };
 		2C7487612B21D4DD001D134B /* test.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = test.csv; sourceTree = "<group>"; };
+		2C8ABFDB2B32D96F00C7330B /* SheetIndex+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SheetIndex+Util.swift"; sourceTree = "<group>"; };
 		2C917CD72B20DB53005FCFB1 /* Commatoze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Commatoze.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2C917CDA2B20DB53005FCFB1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2C917CDC2B20DB53005FCFB1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				2C70E6A32B2F299000B82168 /* SheetSelection+Util.swift */,
+				2C8ABFDB2B32D96F00C7330B /* SheetIndex+Util.swift */,
 			);
 			path = Spreadsheet;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 				2C2A084B2B319D7C0087210B /* CurrentValueSubject+Init.swift in Sources */,
 				2C917CDF2B20DB53005FCFB1 /* ContentTableViewController.swift in Sources */,
 				2C70E6A22B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift in Sources */,
+				2C8ABFDC2B32D96F00C7330B /* SheetIndex+Util.swift in Sources */,
 				2C917CDB2B20DB53005FCFB1 /* AppDelegate.swift in Sources */,
 				2C70E6A72B2F370900B82168 /* MainMenu.swift in Sources */,
 				2C20A8782B3010BD00225EA3 /* ContentTextEditorView.swift in Sources */,
