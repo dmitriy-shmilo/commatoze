@@ -242,6 +242,8 @@ extension ContentTableViewController {
 			return updateCellSelectionIn(sheet: sheet, whenKeyPressed: press)
 		case .columnRange(_, _), .columnSet(_):
 			return updateColumnSelectionIn(sheet: sheet, whenKeyPressed: press)
+		case .rowRange(_, _), .rowSet(_):
+			return updateRowSelectionIn(sheet: sheet, whenKeyPressed: press)
 		default:
 			return false
 		}
@@ -331,6 +333,51 @@ extension ContentTableViewController {
 				return false
 			}
 			sheet.setSelection(.singleColumn(with: column))
+			sheet.scrollToCurrentSelection(animated: true)
+			return true
+		case .keyboardEscape:
+			guard topLeft != .none else {
+				return false
+			}
+			sheet.setSelection(.none)
+			return true
+		default:
+			return false
+		}
+	}
+
+	func updateRowSelectionIn(sheet: SheetView, whenKeyPressed press: UIPress) -> Bool {
+		guard let code = press.key?.keyCode else {
+			return false
+		}
+
+		let topLeft = sheet.currentSelection.topLeft(in: sheet)
+		let topLeftIndex = topLeft.firstIndex(in: sheet)
+		let top = topLeftIndex.row
+
+		guard topLeftIndex != .invalid else {
+			return false
+		}
+
+		switch code {
+		case .keyboardDownArrow:
+			let row = top + 1
+			guard sheet.isValid(row: row) else {
+				return false
+			}
+			sheet.setSelection(.singleRow(with: row))
+			sheet.scrollToCurrentSelection(animated: true)
+			return true
+		case .keyboardUpArrow:
+			let row = top - 1
+			guard sheet.isValid(row: row) else {
+				return false
+			}
+			sheet.setSelection(.singleRow(with: row))
+			sheet.scrollToCurrentSelection(animated: true)
+			return true
+		case .keyboardRightArrow:
+			sheet.setSelection(.singleCell(with: topLeftIndex))
 			sheet.scrollToCurrentSelection(animated: true)
 			return true
 		case .keyboardEscape:
