@@ -10,7 +10,11 @@ extension ContentTableViewController: UIDocumentPickerDelegate {
 		guard let url = urls.first else {
 			return
 		}
-
 		viewModel.readFile(url: url)
+		isPickingFile.send(false)
+	}
+
+	func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) {
+		isPickingFile.send(false)
 	}
 }

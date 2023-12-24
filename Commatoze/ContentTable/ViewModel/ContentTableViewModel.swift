@@ -17,12 +17,15 @@ class ContentTableViewModel {
 	let currentFileName = CurrentValueSubject(value: "")
 	let canUndo = CurrentValueSubject(value: false)
 	let canRedo = CurrentValueSubject(value: false)
+	let isBusy = CurrentValueSubject(value: false)
+
+	let isLoadingFile = CurrentValueSubject(value: false)
+	let isSavingFile = CurrentValueSubject(value: false)
 
 	private var undoManager = UndoManager()
 	private var subscriptions = Set<AnyCancellable>()
 
 	// TODO: abstract libcsv away
-	private let writer = CSVWriter()
 	private let parser = CSVReader()
 	private var rawData = [String]()
 	private var rawColumns = [String]()
@@ -31,67 +34,84 @@ class ContentTableViewModel {
 
 	init() {
 		parser.delegate = self
+		setupBusyFlags()
 		setupData()
 		setupFileUrl()
 		setupUndoManager()
 	}
 
 	func readFile(url: URL) {
-		guard let data = try? Data(contentsOf: url) else {
+		guard !isBusy.value else {
 			return
 		}
-		do {
-			reset()
-			rawUrl = url
-			// TODO: load in background
-			try parser.parse(data: data)
-		} catch {
-			// TODO: report errors to the user
+		isLoadingFile.send(true)
+		DispatchQueue.global().async { [weak self] in
+			do {
+				defer {
+					self?.isLoadingFile.send(false)
+				}
+				self?.reset()
+				self?.rawUrl = url
+				try self?.parser.parse(url: url)
+			} catch {
+				// TODO: report errors to the user
+			}
 		}
 	}
 
 	func saveFile(to url: URL) {
-		do {
-			let tempUrl = try FileManager
-				.default
-				.url(
-					for: FileManager.SearchPathDirectory.itemReplacementDirectory,
-					in: .userDomainMask,
-					appropriateFor: url,
-					create: true)
-				.appendingPathComponent(UUID().uuidString)
+		guard !isBusy.value else {
+			return
+		}
+		isSavingFile.send(true)
 
-			let data = data.value
-			let columns = columns.value
-
-			// TODO: save in the background
-			try writer.start(opening: tempUrl)
-
-			for header in columns.enumerated() {
-				try writer.write(
-					field: header.element,
-					lastInRow: header.offset == columns.count - 1)
-			}
-			try writer.writeRow()
-
-			for datum in data.enumerated() {
-				let endRow = (datum.offset + 1) % columns.count == 0
-				try writer.write(
-					field: datum.element,
-					lastInRow: endRow)
-				if endRow {
-					try writer.writeRow()
+		DispatchQueue.global().async { [weak self] in
+			do {
+				defer {
+					self?.isSavingFile.send(false)
 				}
-			}
 
-			try writer.finish()
+				guard let data = self?.data.value,
+					  let columns = self?.columns.value else {
+					return
+				}
 
-			if FileManager.default.fileExists(atPath: tempUrl.path) {
-				// TODO: handle saving on a different volume
-				let _ = try FileManager.default.replaceItemAt(url, withItemAt: tempUrl)
+				let writer = CSVWriter()
+				let tempUrl = try FileManager
+					.default
+					.url(
+						for: FileManager.SearchPathDirectory.itemReplacementDirectory,
+						in: .userDomainMask,
+						appropriateFor: url,
+						create: true)
+					.appendingPathComponent(UUID().uuidString)
+
+				try writer.start(opening: tempUrl)
+				for header in columns.enumerated() {
+					try writer.write(
+						field: header.element,
+						lastInRow: header.offset == columns.count - 1)
+				}
+				try writer.writeRow()
+
+				for datum in data.enumerated() {
+					let endRow = (datum.offset + 1) % columns.count == 0
+					try writer.write(
+						field: datum.element,
+						lastInRow: endRow)
+					if endRow {
+						try writer.writeRow()
+					}
+				}
+
+				try writer.finish()
+
+				if FileManager.default.fileExists(atPath: tempUrl.path) {
+					let _ = try FileManager.default.replaceItemAt(url, withItemAt: tempUrl)
+				}
+			} catch {
+				// TODO: report errors to the user
 			}
-		} catch {
-			// TODO: report errors to the user
 		}
 	}
 
@@ -169,6 +189,16 @@ class ContentTableViewModel {
 				return url.lastPathComponent
 			}
 			.assign(to: \.value, on: currentFileName)
+			.store(in: &subscriptions)
+	}
+
+	private func setupBusyFlags() {
+		Publishers
+			.CombineLatest(isSavingFile, isLoadingFile)
+			.map {
+				$0 || $1
+			}
+			.assign(to: \.value, on: isBusy)
 			.store(in: &subscriptions)
 	}
 

@@ -6,8 +6,10 @@ import Combine
 
 class ContentTableViewController: UIViewController {
 	@IBOutlet private weak var sheet: SheetView!
+	@IBOutlet private weak var loadingOverlay: UIView!
 
 	let viewModel = ContentTableViewModel()
+	let isPickingFile = CurrentValueSubject(value: false)
 	var currentEditor: UITextView?
 
 	private var subscriptions = Set<AnyCancellable>()
@@ -15,6 +17,7 @@ class ContentTableViewController: UIViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 
+		setupLoadingOverlay()
 		setupSheet()
 		setupCurrentFile()
 		setupCells()
@@ -131,6 +134,7 @@ class ContentTableViewController: UIViewController {
 
 	// MARK: - Menu Actions
 	func openFile() {
+		isPickingFile.send(true)
 		let controller = UIDocumentPickerViewController(
 			documentTypes: ["public.text"],
 			in: .open)
@@ -173,12 +177,14 @@ class ContentTableViewController: UIViewController {
 
 	private func setupCurrentFile() {
 		viewModel.currentFile
+			.receive(on: DispatchQueue.main)
 			.sink { [weak self] _ in
 				self?.sheet.reloadData()
 			}
 			.store(in: &subscriptions)
 
 		viewModel.currentFileName
+			.receive(on: DispatchQueue.main)
 			.sink { [weak self] name in
 				self?.view?.window?.windowScene?.title = name
 			}
@@ -190,6 +196,15 @@ class ContentTableViewController: UIViewController {
 			.sink { [weak self] index in
 				self?.sheet.reloadCellAt(index: index)
 			}
+			.store(in: &subscriptions)
+	}
+
+	private func setupLoadingOverlay() {
+		loadingOverlay.backgroundColor = loadingOverlay.backgroundColor?.withAlphaComponent(0.5)
+		viewModel.isBusy.combineLatest(isPickingFile)
+			.map { (busy, picking) in !(busy || picking) }
+			.receive(on: DispatchQueue.main)
+			.assign(to: \.isHidden, on: loadingOverlay)
 			.store(in: &subscriptions)
 	}
 }

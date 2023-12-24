@@ -21,17 +21,35 @@
                                 <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="786-AP-yLN" userLabel="LoadingOverlay">
+                                <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="Wee-TX-9Lw">
+                                        <rect key="frame" x="382" y="282" width="37" height="37"/>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="Wee-TX-9Lw" firstAttribute="centerY" secondItem="786-AP-yLN" secondAttribute="centerY" id="38Z-Td-Voj"/>
+                                    <constraint firstItem="Wee-TX-9Lw" firstAttribute="centerX" secondItem="786-AP-yLN" secondAttribute="centerX" id="8Pu-hf-dUA"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="Gh9-KY-9Ow" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="0nA-3f-opx"/>
+                            <constraint firstItem="786-AP-yLN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="7gT-Ry-gbg"/>
+                            <constraint firstItem="786-AP-yLN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="9pE-fD-DZm"/>
                             <constraint firstItem="Gh9-KY-9Ow" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="YMu-zU-q9D"/>
                             <constraint firstAttribute="trailing" secondItem="Gh9-KY-9Ow" secondAttribute="trailing" id="Z06-kp-KfA"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="786-AP-yLN" secondAttribute="trailing" id="b9A-mk-EyN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="786-AP-yLN" secondAttribute="bottom" id="qnJ-oC-ABC"/>
                             <constraint firstItem="Gh9-KY-9Ow" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="xuq-Mz-mvh"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="loadingOverlay" destination="786-AP-yLN" id="a2O-wV-gxh"/>
                         <outlet property="sheet" destination="Gh9-KY-9Ow" id="Rhl-Au-lpB"/>
                     </connections>
                 </viewController>
