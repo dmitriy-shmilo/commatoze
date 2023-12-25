@@ -3,6 +3,7 @@
 import Spreadsheet
 
 extension ContentTableViewController: SheetViewDataSource {
+	private static let maxCharCount = 512
 
 	func sheetColumnWidth(_ sheet: SheetView, at index: Int) -> CGFloat {
 		return 200.0
@@ -34,7 +35,12 @@ extension ContentTableViewController: SheetViewDataSource {
 		}
 		let datum = viewModel.data.value[index.index]
 
-		cell.label.text = datum
+		if datum.count > Self.maxCharCount {
+			let endIndex = datum.index(datum.startIndex, offsetBy: Self.maxCharCount)
+			cell.label.text = String(datum[..<endIndex])
+		} else {
+			cell.label.text = datum
+		}
 		cell.label.font = .systemFont(ofSize: 16.0)
 		cell.label.textColor = .secondaryLabel
 		return cell
@@ -48,8 +54,14 @@ extension ContentTableViewController: SheetViewDataSource {
 		guard let cell = sheet.dequeueReusableCell(withIdentifier: "top") as? SheetViewLabelCell else {
 			return .init()
 		}
+		let datum = viewModel.columns.value[index.col]
 
-		cell.label.text = viewModel.columns.value[index.col]
+		if datum.count > Self.maxCharCount {
+			let endIndex = datum.index(datum.startIndex, offsetBy: Self.maxCharCount)
+			cell.label.text = String(datum[..<endIndex])
+		} else {
+			cell.label.text = datum
+		}
 		cell.label.font = .boldSystemFont(ofSize: 16.0)
 		cell.label.textColor = .secondaryLabel
 		cell.normalBackgroundColor = .secondarySystemBackground
@@ -61,10 +73,17 @@ extension ContentTableViewController: SheetViewDataSource {
 		guard let cell = sheet.dequeueReusableCell(withIdentifier: "left") as? SheetViewLabelCell else {
 			return .init()
 		}
+		let datum = viewModel.rows.value[index.row]
+
+		if datum.count > Self.maxCharCount {
+			let endIndex = datum.index(datum.startIndex, offsetBy: Self.maxCharCount)
+			cell.label.text = String(datum[..<endIndex])
+		} else {
+			cell.label.text = datum
+		}
 		cell.label.textAlignment = .center
 		cell.label.textColor = .secondaryLabel
 		cell.label.font = .boldSystemFont(ofSize: 16.0)
-		cell.label.text = viewModel.rows.value[index.row]
 
 		if index.row % 2 == 0 {
 			cell.normalBackgroundColor = .secondarySystemBackground
