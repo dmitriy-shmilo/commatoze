@@ -30,6 +30,7 @@
 		2CC9DD742B3DD0A100AB8AD0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD732B3DD0A100AB8AD0 /* Coordinator.swift */; };
 		2CC9DD792B3DD7E800AB8AD0 /* CoordinatorBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD782B3DD7E800AB8AD0 /* CoordinatorBase.swift */; };
 		2CC9DD7B2B3DD84B00AB8AD0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD7A2B3DD84B00AB8AD0 /* AppCoordinator.swift */; };
+		2CEF0C182B3EEBA6005E9D89 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEF0C172B3EEBA6005E9D89 /* Storyboarded.swift */; };
 		2CF6A4302B264DF2004FAD45 /* ContentTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF6A42F2B264DF2004FAD45 /* ContentTableViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -104,6 +105,7 @@
 		2CC9DD732B3DD0A100AB8AD0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		2CC9DD782B3DD7E800AB8AD0 /* CoordinatorBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorBase.swift; sourceTree = "<group>"; };
 		2CC9DD7A2B3DD84B00AB8AD0 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		2CEF0C172B3EEBA6005E9D89 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
 		2CF6A42F2B264DF2004FAD45 /* ContentTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTableViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -246,6 +248,7 @@
 				2CC9DD732B3DD0A100AB8AD0 /* Coordinator.swift */,
 				2CC9DD782B3DD7E800AB8AD0 /* CoordinatorBase.swift */,
 				2CC9DD7A2B3DD84B00AB8AD0 /* AppCoordinator.swift */,
+			children = (
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -379,6 +382,7 @@
 				2C8ABFDC2B32D96F00C7330B /* SheetIndex+Util.swift in Sources */,
 				2C917CDB2B20DB53005FCFB1 /* AppDelegate.swift in Sources */,
 				2C70E6A72B2F370900B82168 /* MainMenu.swift in Sources */,
+				2CEF0C182B3EEBA6005E9D89 /* Storyboarded.swift in Sources */,
 				2CC9DD742B3DD0A100AB8AD0 /* Coordinator.swift in Sources */,
 				2C20A8782B3010BD00225EA3 /* ContentTextEditorView.swift in Sources */,
 				2C20A87E2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift in Sources */,
