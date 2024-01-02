@@ -11,6 +11,6 @@ class CoordinatorBase: Coordinator {
 	}
 
 	func finish() {
-		fatalError("finish is not implemented")
+		parent?.childDidFinish(self)
 	}
 }

@@ -28,9 +28,14 @@
 		2C917CE42B20DB54005FCFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C917CE32B20DB54005FCFB1 /* Assets.xcassets */; };
 		2C917CE72B20DB54005FCFB1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C917CE52B20DB54005FCFB1 /* LaunchScreen.storyboard */; };
 		2CC9DD742B3DD0A100AB8AD0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD732B3DD0A100AB8AD0 /* Coordinator.swift */; };
+		2CC9DD772B3DD33900AB8AD0 /* ContentTableCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD762B3DD33900AB8AD0 /* ContentTableCoordinator.swift */; };
 		2CC9DD792B3DD7E800AB8AD0 /* CoordinatorBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD782B3DD7E800AB8AD0 /* CoordinatorBase.swift */; };
 		2CC9DD7B2B3DD84B00AB8AD0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD7A2B3DD84B00AB8AD0 /* AppCoordinator.swift */; };
+		2CEF0C102B3EE9A2005E9D89 /* AppCoordinatorInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEF0C0F2B3EE9A2005E9D89 /* AppCoordinatorInput.swift */; };
+		2CEF0C162B3EEA4E005E9D89 /* ContentTableSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEF0C152B3EEA4E005E9D89 /* ContentTableSceneDelegate.swift */; };
 		2CEF0C182B3EEBA6005E9D89 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEF0C172B3EEBA6005E9D89 /* Storyboarded.swift */; };
+		2CEF0C1A2B3EEE96005E9D89 /* ContentTableViewController+Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEF0C192B3EEE96005E9D89 /* ContentTableViewController+Storyboarded.swift */; };
+		2CEF0C1C2B3EF199005E9D89 /* ContentTableCoordinatorInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEF0C1B2B3EF199005E9D89 /* ContentTableCoordinatorInput.swift */; };
 		2CF6A4302B264DF2004FAD45 /* ContentTableViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF6A42F2B264DF2004FAD45 /* ContentTableViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -103,9 +108,14 @@
 		2C917CE82B20DB54005FCFB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C917CEE2B20DB68005FCFB1 /* Commatoze.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commatoze.entitlements; sourceTree = "<group>"; };
 		2CC9DD732B3DD0A100AB8AD0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		2CC9DD762B3DD33900AB8AD0 /* ContentTableCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTableCoordinator.swift; sourceTree = "<group>"; };
 		2CC9DD782B3DD7E800AB8AD0 /* CoordinatorBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorBase.swift; sourceTree = "<group>"; };
 		2CC9DD7A2B3DD84B00AB8AD0 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		2CEF0C0F2B3EE9A2005E9D89 /* AppCoordinatorInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinatorInput.swift; sourceTree = "<group>"; };
+		2CEF0C152B3EEA4E005E9D89 /* ContentTableSceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTableSceneDelegate.swift; sourceTree = "<group>"; };
 		2CEF0C172B3EEBA6005E9D89 /* Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storyboarded.swift; sourceTree = "<group>"; };
+		2CEF0C192B3EEE96005E9D89 /* ContentTableViewController+Storyboarded.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+Storyboarded.swift"; sourceTree = "<group>"; };
+		2CEF0C1B2B3EF199005E9D89 /* ContentTableCoordinatorInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTableCoordinatorInput.swift; sourceTree = "<group>"; };
 		2CF6A42F2B264DF2004FAD45 /* ContentTableViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTableViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -127,6 +137,7 @@
 			children = (
 				2CC9DD6E2B3DD08F00AB8AD0 /* Coordinator */,
 				2C2A084A2B319D7C0087210B /* CurrentValueSubject+Init.swift */,
+				2CEF0C172B3EEBA6005E9D89 /* Storyboarded.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -167,6 +178,7 @@
 				2C20A87D2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift */,
 				2C70E69F2B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift */,
 				2C70E6A12B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift */,
+				2CEF0C192B3EEE96005E9D89 /* ContentTableViewController+Storyboarded.swift */,
 				2C20A87F2B30368900225EA3 /* ContentTableViewController+UIDocumentPickerDelegate.swift */,
 				2C20A8772B3010BD00225EA3 /* ContentTextEditorView.swift */,
 				2C70E6A62B2F370900B82168 /* MainMenu.swift */,
@@ -248,7 +260,17 @@
 				2CC9DD732B3DD0A100AB8AD0 /* Coordinator.swift */,
 				2CC9DD782B3DD7E800AB8AD0 /* CoordinatorBase.swift */,
 				2CC9DD7A2B3DD84B00AB8AD0 /* AppCoordinator.swift */,
+				2CEF0C0F2B3EE9A2005E9D89 /* AppCoordinatorInput.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		2CC9DD752B3DD32300AB8AD0 /* Coordinator */ = {
+			isa = PBXGroup;
 			children = (
+				2CEF0C152B3EEA4E005E9D89 /* ContentTableSceneDelegate.swift */,
+				2CC9DD762B3DD33900AB8AD0 /* ContentTableCoordinator.swift */,
+				2CEF0C1B2B3EF199005E9D89 /* ContentTableCoordinatorInput.swift */,
 			);
 			path = Coordinator;
 			sourceTree = "<group>";
@@ -385,12 +407,17 @@
 				2CEF0C182B3EEBA6005E9D89 /* Storyboarded.swift in Sources */,
 				2CC9DD742B3DD0A100AB8AD0 /* Coordinator.swift in Sources */,
 				2C20A8782B3010BD00225EA3 /* ContentTextEditorView.swift in Sources */,
+				2CEF0C1A2B3EEE96005E9D89 /* ContentTableViewController+Storyboarded.swift in Sources */,
 				2C20A87E2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift in Sources */,
 				2C70E6A02B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift in Sources */,
+				2CEF0C162B3EEA4E005E9D89 /* ContentTableSceneDelegate.swift in Sources */,
+				2CEF0C102B3EE9A2005E9D89 /* AppCoordinatorInput.swift in Sources */,
 				2CF6A4302B264DF2004FAD45 /* ContentTableViewModel.swift in Sources */,
+				2CC9DD772B3DD33900AB8AD0 /* ContentTableCoordinator.swift in Sources */,
 				2C917CDD2B20DB53005FCFB1 /* SceneDelegate.swift in Sources */,
 				2C20A8802B30368900225EA3 /* ContentTableViewController+UIDocumentPickerDelegate.swift in Sources */,
 				2C70E6A42B2F299000B82168 /* SheetSelection+Util.swift in Sources */,
+				2CEF0C1C2B3EF199005E9D89 /* ContentTableCoordinatorInput.swift in Sources */,
 				2CC9DD792B3DD7E800AB8AD0 /* CoordinatorBase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
