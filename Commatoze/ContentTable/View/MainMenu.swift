@@ -10,7 +10,15 @@ struct MainMenu {
 			input: "o",
 			modifierFlags: .command)
 
-		let openMenu = UIMenu(options: .displayInline, children: [open])
+		let openAndReplace = UIKeyCommand(
+			title: NSLocalizedString(
+				"Open in This Window",
+				comment: "Open file replacing current content"),
+			action: #selector(ContentTableViewController.openAndReplaceAction(_:)),
+			input: "o",
+			modifierFlags: [.command, .shift])
+
+		let openMenu = UIMenu(options: .displayInline, children: [open, openAndReplace])
 
 		let save = UIKeyCommand(
 			title: NSLocalizedString("Save", comment: "Save"),

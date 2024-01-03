@@ -9,6 +9,8 @@ class ContentTableCoordinator: CoordinatorBase {
 	private var rootViewController: ContentTableViewController?
 	private var url: URL?
 
+	private var replaceOnOpen = false
+
 	init(with window: UIWindow, url: URL?) {
 		self.window = window
 		self.url = url
@@ -36,14 +38,18 @@ class ContentTableCoordinator: CoordinatorBase {
 	) {
 		switch coordinator {
 		case is DocumentPickerCoordinator
-			where result == DocumentPickerCoordinator.resultCancel:
-			break
-		case is DocumentPickerCoordinator
 			where result == DocumentPickerCoordinator.resultOpen:
 			guard let urls = userData as? [URL],
 				  let url = urls.first else {
 				break
 			}
+
+			if replaceOnOpen {
+				self.url = url
+				rootViewController?.viewModel.readFile(url: url)
+				return
+			}
+
 			AppCoordinator.shared.startContentTable(url: url)
 		default:
 			break
@@ -64,10 +70,11 @@ extension ContentTableCoordinator: ContentTableCoordinatorInput {
 			options: nil)
 	}
 
-	func presentFilePicker() {
+	func presentFilePicker(willReplaceContent: Bool) {
 		guard let rootViewController = rootViewController else {
 			return
 		}
+		replaceOnOpen = willReplaceContent
 		let coordinator = DocumentPickerCoordinator(with: rootViewController)
 		addChild(coordinator: coordinator)
 	}

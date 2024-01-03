@@ -120,8 +120,8 @@ class ContentTableViewController: UIViewController {
 	}
 
 	// MARK: - Menu Actions
-	func openFile() {
-		coordinator?.presentFilePicker()
+	func openFile(andReplace replace: Bool) {
+		coordinator?.presentFilePicker(willReplaceContent: replace)
 	}
 
 	func saveFile() {
@@ -399,7 +399,11 @@ extension ContentTableViewController {
 extension ContentTableViewController {
 	// MARK: - File
 	@objc func openAction(_ sender: UICommand) {
-		openFile()
+		openFile(andReplace: false)
+	}
+
+	@objc func openAndReplaceAction(_ sender: UICommand) {
+		openFile(andReplace: true)
 	}
 
 	@objc func saveAction(_ sender: UICommand) {
