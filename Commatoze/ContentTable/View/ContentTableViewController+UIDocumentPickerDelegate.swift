@@ -10,7 +10,7 @@ extension ContentTableViewController: UIDocumentPickerDelegate {
 		guard let url = urls.first else {
 			return
 		}
-		viewModel.readFile(url: url)
+		AppCoordinator.shared.startContentTable(url: url)
 		isPickingFile.send(false)
 	}
 

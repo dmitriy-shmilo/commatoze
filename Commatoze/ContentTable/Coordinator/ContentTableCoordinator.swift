@@ -5,15 +5,25 @@ import UIKit
 
 class ContentTableCoordinator: CoordinatorBase {
 
-	let window: UIWindow
-	var rootViewController: ContentTableViewController?
+	private let window: UIWindow
+	private var rootViewController: ContentTableViewController?
+	private var url: URL?
 
-	init(with window: UIWindow) {
+	init(with window: UIWindow, url: URL?) {
 		self.window = window
+		self.url = url
 	}
 	
 	override func start() {
+		let viewModel: ContentTableViewModel
+		if let url = url {
+			viewModel = .init(with: url)
+		} else {
+			viewModel = .init()
+		}
+
 		rootViewController = ContentTableViewController.instantiate()
+		rootViewController?.viewModel = viewModel
 		window.rootViewController = rootViewController
 		window.makeKeyAndVisible()
 	}

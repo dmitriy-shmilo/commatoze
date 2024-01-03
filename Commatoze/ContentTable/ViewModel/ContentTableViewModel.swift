@@ -40,6 +40,11 @@ class ContentTableViewModel {
 		setupUndoManager()
 	}
 
+	convenience init(with url: URL) {
+		self.init()
+		readFile(url: url)
+	}
+
 	func readFile(url: URL) {
 		guard !isBusy.value else {
 			return

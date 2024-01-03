@@ -8,7 +8,7 @@ class ContentTableViewController: UIViewController {
 	@IBOutlet private weak var sheet: SheetView!
 	@IBOutlet private weak var loadingOverlay: UIView!
 
-	let viewModel = ContentTableViewModel()
+	var viewModel: ContentTableViewModel!
 	let isPickingFile = CurrentValueSubject(value: false)
 	var currentEditor: UITextView?
 
@@ -16,22 +16,8 @@ class ContentTableViewController: UIViewController {
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
-
-		setupLoadingOverlay()
-		setupSheet()
-		setupCurrentFile()
-		setupCells()
+		setup()
 	}
-
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		guard let url = Bundle.main.url(forResource: "test", withExtension: ".csv") else {
-			return
-		}
-		viewModel.readFile(url: url)
-	}
-
-
 
 	override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
 		guard let press = presses.first else {
@@ -167,6 +153,14 @@ class ContentTableViewController: UIViewController {
 	}
 
 	// MARK: - Setup
+	private func setup() {
+		subscriptions.removeAll()
+		setupLoadingOverlay()
+		setupSheet()
+		setupCurrentFile()
+		setupCells()
+	}
+	
 	private func setupSheet() {
 		sheet.register(SheetViewLabelCell.self, forCellReuseIdentifier: "cell")
 		sheet.register(SheetViewLabelCell.self, forCellReuseIdentifier: "top")
@@ -443,3 +437,5 @@ extension ContentTableViewController {
 		delete(self)
 	}
 }
+
+

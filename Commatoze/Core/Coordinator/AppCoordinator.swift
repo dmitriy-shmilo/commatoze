@@ -15,8 +15,9 @@ class AppCoordinator: CoordinatorBase {
 }
 
 extension AppCoordinator: AppCoordinatorInput {
-	func startContentTable() {
+	func startContentTable(url: URL?) {
 		let activity = NSUserActivity(activityType: "ContentTableViewController")
+		activity.userInfo?["URL"] = url?.absoluteString
 		UIApplication.shared
 			.requestSceneSessionActivation(
 				nil,

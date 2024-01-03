@@ -10,11 +10,14 @@ class ContentTableSceneDelegate: UIResponder, UIWindowSceneDelegate {
 		guard let scene = (scene as? UIWindowScene) else {
 			return
 		}
-
+		let url = connectionOptions.userActivities
+			.first?
+			.userInfo?["URL"] as? String ?? ""
 		let window = UIWindow(windowScene: scene)
-		let coordinator = ContentTableCoordinator(with: window)
+		let coordinator = ContentTableCoordinator(with: window, url: URL(string: url))
 		AppCoordinator.shared.addChild(coordinator: coordinator)
 		self.coordinator = coordinator
+		self.window = window
 	}
 
 	func sceneDidDisconnect(_ scene: UIScene) {

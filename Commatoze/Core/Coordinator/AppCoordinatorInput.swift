@@ -3,5 +3,5 @@
 import Foundation
 
 protocol AppCoordinatorInput: Coordinator {
-	func startContentTable()
+	func startContentTable(url: URL?)
 }
