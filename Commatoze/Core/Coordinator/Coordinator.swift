@@ -8,6 +8,8 @@ protocol Coordinator: AnyObject {
 
 	func start()
 	func finish()
+	func childDidFinish(_ coordinator: Coordinator)
+	func child(coordinator: Coordinator, didFinishWith result: Int, userData: Any?)
 }
 
 extension Coordinator {

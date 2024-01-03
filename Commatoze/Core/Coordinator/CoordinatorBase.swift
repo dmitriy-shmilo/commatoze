@@ -13,4 +13,8 @@ class CoordinatorBase: Coordinator {
 	func finish() {
 		parent?.childDidFinish(self)
 	}
+
+	func child(coordinator: Coordinator, didFinishWith result: Int, userData: Any?) {
+		childDidFinish(coordinator)
+	}
 }

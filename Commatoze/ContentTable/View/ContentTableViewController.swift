@@ -8,6 +8,7 @@ class ContentTableViewController: UIViewController {
 	@IBOutlet private weak var sheet: SheetView!
 	@IBOutlet private weak var loadingOverlay: UIView!
 
+	weak var coordinator: ContentTableCoordinator?
 	var viewModel: ContentTableViewModel!
 	let isPickingFile = CurrentValueSubject(value: false)
 	var currentEditor: UITextView?
@@ -120,14 +121,7 @@ class ContentTableViewController: UIViewController {
 
 	// MARK: - Menu Actions
 	func openFile() {
-		isPickingFile.send(true)
-		let controller = UIDocumentPickerViewController(
-			documentTypes: ["public.text"],
-			in: .open)
-		// TODO: allow opening multiple documents
-		controller.allowsMultipleSelection = false
-		controller.delegate = self
-		present(controller, animated: true)
+		coordinator?.presentFilePicker()
 	}
 
 	func saveFile() {
