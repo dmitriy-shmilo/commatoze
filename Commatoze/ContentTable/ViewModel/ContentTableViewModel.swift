@@ -7,6 +7,11 @@ import LibCSV
 import Spreadsheet
 
 class ContentTableViewModel {
+	enum ContentTableError: Error {
+		case unknown
+		case isBusy
+	}
+
 	let cellChanged = PassthroughSubject<SheetIndex, Never>()
 	let undoStackChanged = PassthroughSubject<Void, Never>()
 
@@ -22,6 +27,8 @@ class ContentTableViewModel {
 	let isLoadingFile = CurrentValueSubject(value: false)
 	let isSavingFile = CurrentValueSubject(value: false)
 
+	private(set) var tempUrl: URL?
+
 	private var undoManager = UndoManager()
 	private var subscriptions = Set<AnyCancellable>()
 
@@ -30,7 +37,7 @@ class ContentTableViewModel {
 	private var rawData = [String]()
 	private var rawColumns = [String]()
 	private var readingHeader = true
-	private var rawUrl: URL?
+	private var rawUrl: URL? = nil
 
 	init() {
 		parser.delegate = self
@@ -64,6 +71,48 @@ class ContentTableViewModel {
 		}
 	}
 
+	// TODO: this method is complete trash and needs to be rewritten
+	func saveTempFile() {
+		guard !isBusy.value else {
+			return
+		}
+
+		isSavingFile.send(true)
+		defer {
+			isSavingFile.send(false)
+		}
+
+		let tempDir = FileManager
+			.default
+			.temporaryDirectory
+			.appendingPathComponent(UUID().uuidString, isDirectory: true)
+
+		if tempUrl == nil {
+			tempUrl = tempDir
+				.appendingPathComponent(currentFileName.value, isDirectory: false)
+		}
+
+		if let tempUrl = tempUrl {
+			do {
+				// TODO: abstract file manager away
+				try FileManager.default.createDirectory(
+					at: tempDir,
+					withIntermediateDirectories: true)
+				try writeTo(url: tempUrl)
+			} catch {
+				// TODO: log and report to the user
+			}
+		}
+	}
+
+	func cleanUpTempFile() {
+		guard let tempUrl = tempUrl else {
+			return
+		}
+
+		try? FileManager.default.removeItem(at: tempUrl)
+	}
+
 	func saveFile(to url: URL) {
 		guard !isBusy.value else {
 			return
@@ -76,12 +125,6 @@ class ContentTableViewModel {
 					self?.isSavingFile.send(false)
 				}
 
-				guard let data = self?.data.value,
-					  let columns = self?.columns.value else {
-					return
-				}
-
-				let writer = CSVWriter()
 				let tempUrl = try FileManager
 					.default
 					.url(
@@ -91,25 +134,7 @@ class ContentTableViewModel {
 						create: true)
 					.appendingPathComponent(UUID().uuidString)
 
-				try writer.start(opening: tempUrl)
-				for header in columns.enumerated() {
-					try writer.write(
-						field: header.element,
-						lastInRow: header.offset == columns.count - 1)
-				}
-				try writer.writeRow()
-
-				for datum in data.enumerated() {
-					let endRow = (datum.offset + 1) % columns.count == 0
-					try writer.write(
-						field: datum.element,
-						lastInRow: endRow)
-					if endRow {
-						try writer.writeRow()
-					}
-				}
-
-				try writer.finish()
+				try self?.writeTo(url: tempUrl)
 
 				if FileManager.default.fileExists(atPath: tempUrl.path) {
 					let _ = try FileManager.default.replaceItemAt(url, withItemAt: tempUrl)
@@ -214,6 +239,32 @@ class ContentTableViewModel {
 		rawColumns = []
 		undoManager.removeAllActions()
 		undoStackChanged.send()
+	}
+
+	private func writeTo(url: URL) throws {
+		let data = data.value
+		let columns = columns.value
+		let writer = CSVWriter()
+
+		try writer.start(opening: url)
+		for header in columns.enumerated() {
+			try writer.write(
+				field: header.element,
+				lastInRow: header.offset == columns.count - 1)
+		}
+		try writer.writeRow()
+
+		for datum in data.enumerated() {
+			let endRow = (datum.offset + 1) % columns.count == 0
+			try writer.write(
+				field: datum.element,
+				lastInRow: endRow)
+			if endRow {
+				try writer.writeRow()
+			}
+		}
+
+		try writer.finish()
 	}
 }
 

@@ -70,12 +70,23 @@ extension ContentTableCoordinator: ContentTableCoordinatorInput {
 			options: nil)
 	}
 
-	func presentFilePicker(willReplaceContent: Bool) {
+	func presentOpenFilePicker(willReplaceContent: Bool) {
 		guard let rootViewController = rootViewController else {
 			return
 		}
 		replaceOnOpen = willReplaceContent
-		let coordinator = DocumentPickerCoordinator(with: rootViewController)
+		let coordinator = DocumentPickerCoordinator(
+			with: rootViewController)
+		addChild(coordinator: coordinator)
+	}
+
+	func presentSaveFilePicker(for url: URL) {
+		guard let rootViewController = rootViewController else {
+			return
+		}
+		let coordinator = DocumentPickerCoordinator(
+			with: rootViewController,
+			exportUrl: url)
 		addChild(coordinator: coordinator)
 	}
 }

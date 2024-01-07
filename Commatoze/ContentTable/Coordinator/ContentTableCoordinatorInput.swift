@@ -3,6 +3,7 @@
 import Foundation
 
 protocol ContentTableCoordinatorInput: Coordinator {
-	func presentFilePicker(willReplaceContent: Bool)
+	func presentOpenFilePicker(willReplaceContent: Bool)
+	func presentSaveFilePicker(for url: URL)
 	func close()
 }

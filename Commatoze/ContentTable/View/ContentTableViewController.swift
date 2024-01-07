@@ -121,15 +121,19 @@ class ContentTableViewController: UIViewController {
 
 	// MARK: - Menu Actions
 	func openFile(andReplace replace: Bool) {
-		coordinator?.presentFilePicker(willReplaceContent: replace)
+		coordinator?.presentOpenFilePicker(willReplaceContent: replace)
 	}
 
-	func saveFile() {
-		// TODO: show the save picker
-		guard let url = viewModel.currentFile.value else {
+	func saveFile(andReplace replace: Bool) {
+		if let url = viewModel.currentFile.value, replace {
+			viewModel.saveFile(to: url)
 			return
 		}
-		viewModel.saveFile(to: url)
+
+		viewModel.saveTempFile()
+		if let tempUrl = viewModel.tempUrl {
+			coordinator?.presentSaveFilePicker(for: tempUrl)
+		}
 	}
 
 	func undo() {
@@ -407,7 +411,11 @@ extension ContentTableViewController {
 	}
 
 	@objc func saveAction(_ sender: UICommand) {
-		saveFile()
+		saveFile(andReplace: true)
+	}
+
+	@objc func saveAsAction(_ sender: UICommand) {
+		saveFile(andReplace: false)
 	}
 
 	// MARK: - Edit

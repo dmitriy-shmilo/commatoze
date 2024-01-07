@@ -5,7 +5,7 @@ import UIKit
 struct MainMenu {
 	static func fileMenu() -> [UIMenuElement] {
 		let open = UIKeyCommand(
-			title: NSLocalizedString("Open", comment: "Open"),
+			title: NSLocalizedString("Open...", comment: "Open"),
 			action: #selector(ContentTableViewController.openAction(_:)),
 			input: "o",
 			modifierFlags: .command)
@@ -26,7 +26,13 @@ struct MainMenu {
 			input: "s",
 			modifierFlags: .command)
 
-		let saveMenu = UIMenu(options: .displayInline, children: [save])
+		let saveAs = UIKeyCommand(
+			title: NSLocalizedString("Save As...", comment: "Save"),
+			action: #selector(ContentTableViewController.saveAsAction(_:)),
+			input: "s",
+			modifierFlags: [.command, .shift])
+
+		let saveMenu = UIMenu(options: .displayInline, children: [save, saveAs])
 
 		return [openMenu, saveMenu]
 	}
