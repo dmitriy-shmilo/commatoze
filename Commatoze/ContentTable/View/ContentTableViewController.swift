@@ -157,6 +157,7 @@ class ContentTableViewController: UIViewController {
 		setupSheet()
 		setupCurrentFile()
 		setupCells()
+		setupInteractions()
 	}
 	
 	private func setupSheet() {
@@ -198,6 +199,11 @@ class ContentTableViewController: UIViewController {
 			.receive(on: DispatchQueue.main)
 			.assign(to: \.isHidden, on: loadingOverlay)
 			.store(in: &subscriptions)
+	}
+
+	private func setupInteractions() {
+		let dropInteraction = UIDropInteraction(delegate: self)
+		view.addInteraction(dropInteraction)
 	}
 }
 
