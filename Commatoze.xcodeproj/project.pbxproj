@@ -34,6 +34,8 @@
 		2CC9DD772B3DD33900AB8AD0 /* ContentTableCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD762B3DD33900AB8AD0 /* ContentTableCoordinator.swift */; };
 		2CC9DD792B3DD7E800AB8AD0 /* CoordinatorBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD782B3DD7E800AB8AD0 /* CoordinatorBase.swift */; };
 		2CC9DD7B2B3DD84B00AB8AD0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD7A2B3DD84B00AB8AD0 /* AppCoordinator.swift */; };
+		2CD423562B4B45E300BF2520 /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD423552B4B45E300BF2520 /* HeaderCell.swift */; };
+		2CD4235A2B4B46AF00BF2520 /* HeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CD423592B4B46AF00BF2520 /* HeaderCell.xib */; };
 		2CEF0C102B3EE9A2005E9D89 /* AppCoordinatorInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEF0C0F2B3EE9A2005E9D89 /* AppCoordinatorInput.swift */; };
 		2CEF0C162B3EEA4E005E9D89 /* ContentTableSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEF0C152B3EEA4E005E9D89 /* ContentTableSceneDelegate.swift */; };
 		2CEF0C182B3EEBA6005E9D89 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEF0C172B3EEBA6005E9D89 /* Storyboarded.swift */; };
@@ -211,9 +213,9 @@
 				2C70E69F2B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift */,
 				2C70E6A12B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift */,
 				2CEF0C192B3EEE96005E9D89 /* ContentTableViewController+Storyboarded.swift */,
+				2C9327232B4B3FD50069F308 /* ContentTableViewController+UIDropInteractionDelegate .swift */,
 				2C20A8772B3010BD00225EA3 /* ContentTextEditorView.swift */,
 				2C70E6A62B2F370900B82168 /* MainMenu.swift */,
-				2C9327232B4B3FD50069F308 /* ContentTableViewController+UIDropInteractionDelegate .swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

@@ -14,7 +14,7 @@ extension ContentTableViewController: UIDropInteractionDelegate {
 		_ interaction: UIDropInteraction,
 		sessionDidUpdate session: UIDropSession
 	) -> UIDropProposal {
-		return UIDropProposal(operation: .move)
+		return UIDropProposal(operation: .copy)
 	}
 
 	func dropInteraction(
