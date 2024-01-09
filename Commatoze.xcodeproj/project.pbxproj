@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C0FE2EB2B4DF31B002A7E94 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 2C0FE2CF2B4DF31B002A7E94 /* LICENSE */; };
+		2C0FE2F52B4DF31B002A7E94 /* IPDFMacEventBus.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0FE2DE2B4DF31B002A7E94 /* IPDFMacEventBus.m */; };
 		2C20A8782B3010BD00225EA3 /* ContentTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20A8772B3010BD00225EA3 /* ContentTextEditorView.swift */; };
 		2C20A87E2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20A87D2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift */; };
 		2C2A084B2B319D7C0087210B /* CurrentValueSubject+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2A084A2B319D7C0087210B /* CurrentValueSubject+Init.swift */; };
@@ -34,8 +36,6 @@
 		2CC9DD772B3DD33900AB8AD0 /* ContentTableCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD762B3DD33900AB8AD0 /* ContentTableCoordinator.swift */; };
 		2CC9DD792B3DD7E800AB8AD0 /* CoordinatorBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD782B3DD7E800AB8AD0 /* CoordinatorBase.swift */; };
 		2CC9DD7B2B3DD84B00AB8AD0 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD7A2B3DD84B00AB8AD0 /* AppCoordinator.swift */; };
-		2CD423562B4B45E300BF2520 /* HeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD423552B4B45E300BF2520 /* HeaderCell.swift */; };
-		2CD4235A2B4B46AF00BF2520 /* HeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2CD423592B4B46AF00BF2520 /* HeaderCell.xib */; };
 		2CEF0C102B3EE9A2005E9D89 /* AppCoordinatorInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEF0C0F2B3EE9A2005E9D89 /* AppCoordinatorInput.swift */; };
 		2CEF0C162B3EEA4E005E9D89 /* ContentTableSceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEF0C152B3EEA4E005E9D89 /* ContentTableSceneDelegate.swift */; };
 		2CEF0C182B3EEBA6005E9D89 /* Storyboarded.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEF0C172B3EEBA6005E9D89 /* Storyboarded.swift */; };
@@ -91,6 +91,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		2C0FE2CF2B4DF31B002A7E94 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		2C0FE2D02B4DF31B002A7E94 /* IPDFMacEventBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPDFMacEventBus.h; sourceTree = "<group>"; };
+		2C0FE2DE2B4DF31B002A7E94 /* IPDFMacEventBus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPDFMacEventBus.m; sourceTree = "<group>"; };
+		2C0FE2F82B4DF4D3002A7E94 /* Commatoze-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Commatoze-Bridging-Header.h"; sourceTree = "<group>"; };
 		2C20A8772B3010BD00225EA3 /* ContentTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTextEditorView.swift; sourceTree = "<group>"; };
 		2C20A87D2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+ContentTextEditorViewDelegate.swift"; sourceTree = "<group>"; };
 		2C2A084A2B319D7C0087210B /* CurrentValueSubject+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrentValueSubject+Init.swift"; sourceTree = "<group>"; };
@@ -140,6 +144,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C0FE2CA2B4DF31B002A7E94 /* Catalyst-Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				2C0FE2D02B4DF31B002A7E94 /* IPDFMacEventBus.h */,
+				2C0FE2DE2B4DF31B002A7E94 /* IPDFMacEventBus.m */,
+				2C0FE2CF2B4DF31B002A7E94 /* LICENSE */,
+			);
+			name = "Catalyst-Helpers";
+			path = "Lib/Catalyst-Helpers";
+			sourceTree = "<group>";
+		};
 		2C2A08452B319D6F0087210B /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +194,7 @@
 		2C59CF872B20E9700048363D /* Lib */ = {
 			isa = PBXGroup;
 			children = (
+				2C0FE2CA2B4DF31B002A7E94 /* Catalyst-Helpers */,
 				2C7487552B21D42D001D134B /* LibCSV.xcodeproj */,
 				2C59CF882B20E9780048363D /* Spreadsheet.xcodeproj */,
 			);
@@ -268,10 +284,11 @@
 		2C917CD92B20DB53005FCFB1 /* Commatoze */ = {
 			isa = PBXGroup;
 			children = (
-				2C2A08452B319D6F0087210B /* Core */,
 				2C917CDA2B20DB53005FCFB1 /* AppDelegate.swift */,
+				2C0FE2F82B4DF4D3002A7E94 /* Commatoze-Bridging-Header.h */,
 				2C917CEE2B20DB68005FCFB1 /* Commatoze.entitlements */,
 				2C59CF912B20E9BD0048363D /* ContentTable */,
+				2C2A08452B319D6F0087210B /* Core */,
 				2C59842F2B45965800E0CEF3 /* DocumentPicker */,
 				2C917CE82B20DB54005FCFB1 /* Info.plist */,
 				2C917CE52B20DB54005FCFB1 /* LaunchScreen.storyboard */,
@@ -418,6 +435,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C0FE2EB2B4DF31B002A7E94 /* LICENSE in Resources */,
 				2C917CE72B20DB54005FCFB1 /* LaunchScreen.storyboard in Resources */,
 				2C917CE42B20DB54005FCFB1 /* Assets.xcassets in Resources */,
 				2C7487622B21D4DD001D134B /* test.csv in Resources */,
@@ -434,6 +452,7 @@
 			files = (
 				2C2A084B2B319D7C0087210B /* CurrentValueSubject+Init.swift in Sources */,
 				2C917CDF2B20DB53005FCFB1 /* ContentTableViewController.swift in Sources */,
+				2C0FE2F52B4DF31B002A7E94 /* IPDFMacEventBus.m in Sources */,
 				2CC9DD7B2B3DD84B00AB8AD0 /* AppCoordinator.swift in Sources */,
 				2C70E6A22B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift in Sources */,
 				2C8ABFDC2B32D96F00C7330B /* SheetIndex+Util.swift in Sources */,
@@ -606,6 +625,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZJSZZS49UL;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Lib/Catalyst-Helpers";
 				INFOPLIST_FILE = Commatoze/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -626,6 +646,7 @@
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/$(SWIFT_MODULE_NAME)-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -641,6 +662,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = ZJSZZS49UL;
 				GENERATE_INFOPLIST_FILE = YES;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/Lib/Catalyst-Helpers";
 				INFOPLIST_FILE = Commatoze/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -661,6 +683,7 @@
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/$(PROJECT_NAME)/$(SWIFT_MODULE_NAME)-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

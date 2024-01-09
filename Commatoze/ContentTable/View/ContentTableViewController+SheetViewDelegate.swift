@@ -7,6 +7,7 @@ extension ContentTableViewController: SheetViewDelegate {
 	func sheet(_ sheet: SheetView, editorCellFor index: SheetIndex) -> UIView? {
 		let datum = viewModel.data.value[index.index]
 		let editor = ContentTextEditorView()
+		editor.cellIndex = index
 		editor.text = datum
 		editor.font = .systemFont(ofSize: 16.0)
 		editor.editorDelegate = self

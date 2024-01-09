@@ -8,9 +8,11 @@ protocol ContentTextEditorViewDelegate: AnyObject {
 	func textEditorDidConfirmEditing(_ editor: ContentTextEditorView)
 }
 
-class ContentTextEditorView: UITextView, UITextViewDelegate {
+class ContentTextEditorView: UITextView {
 	var cellIndex = SheetIndex.invalid
 	weak var editorDelegate: ContentTextEditorViewDelegate?
+
+	private var eventBusMonitor: IPDFMacEventBusMonitor?
 
 	init() {
 		super.init(frame: .zero, textContainer: nil)
@@ -25,39 +27,42 @@ class ContentTextEditorView: UITextView, UITextViewDelegate {
 		super.init(coder: coder)
 	}
 
-	override func pressesBegan(_ presses: Set<UIPress>, with event: UIPressesEvent?) {
-		// TODO: pressesBegan is not called for Esc and Return keys and should be handled on a lower level
-		// see https://stackoverflow.com/a/72409736/575979 and https://github.com/mmackh/Catalyst-Helpers
-		guard let key = presses.first?.key else {
-			super.pressesBegan(presses, with: event)
+	deinit {
+		guard let eventBusMonitor = eventBusMonitor else {
 			return
 		}
-		if key.keyCode == .keyboardEscape {
-			editorDelegate?.textEditorDidCancelEditing(self)
-			return
-		}
-
-		if (key.keyCode == .keypadEnter || key.keyCode == .keyboardReturnOrEnter)
-			&& key.modifierFlags == .command {
-			editorDelegate?.textEditorDidConfirmEditing(self)
-			return
-		}
-
-		super.pressesBegan(presses, with: event)
+		IPDFMacEventBus.shared().remove(eventBusMonitor)
 	}
 
 	// MARK: - Private Methods
+	private func cancel() {
+		editorDelegate?.textEditorDidCancelEditing(self)
+	}
+
+	private func confirm() {
+		editorDelegate?.textEditorDidConfirmEditing(self)
+	}
+
 	private func setup() {
-		delegate = self
+		let eventBusMonitor = IPDFMacEventBusMonitor(type: .keydown) { [weak self] event in
+			if event.isESC() {
+				self?.cancel()
+				return nil
+			}
+
+			if event.cmdModifier() && event.isEnter() {
+				self?.confirm()
+				return nil
+			}
+
+			return event
+		}
+		IPDFMacEventBus.shared().add(eventBusMonitor)
+		self.eventBusMonitor = eventBusMonitor
+
 		isEditable = true
 		layer.borderColor = UIColor.systemBlue.cgColor
 		backgroundColor = .tertiarySystemBackground
 		textColor = .label
-	}
-}
-
-extension ContentTextEditorView: UITextFieldDelegate {
-	func textViewDidEndEditing(_ textView: UITextView) {
-		editorDelegate?.textEditorDidCancelEditing(self)
 	}
 }

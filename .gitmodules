@@ -7,3 +7,6 @@
 [submodule "Lib/LibCSV"]
 	path = Lib/LibCSV
 	url = https://github.com/dmitriy-shmilo/LibCSV
+[submodule "Lib/Catalyst-Helpers"]
+	path = Lib/Catalyst-Helpers
+	url = https://github.com/mmackh/Catalyst-Helpers
