@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		2C0FE2EB2B4DF31B002A7E94 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 2C0FE2CF2B4DF31B002A7E94 /* LICENSE */; };
 		2C0FE2F52B4DF31B002A7E94 /* IPDFMacEventBus.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C0FE2DE2B4DF31B002A7E94 /* IPDFMacEventBus.m */; };
+		2C0FE2FB2B4EE36B002A7E94 /* HorizontalHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0FE2FA2B4EE36B002A7E94 /* HorizontalHeaderCell.swift */; };
+		2C0FE3002B4F0396002A7E94 /* CellResizerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0FE2FF2B4F0396002A7E94 /* CellResizerDelegate.swift */; };
+		2C0FE3022B4F08EF002A7E94 /* VerticalHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C0FE3012B4F08EF002A7E94 /* VerticalHeaderCell.swift */; };
+		2C0FE3042B4F2996002A7E94 /* VerticalHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C0FE3032B4F2996002A7E94 /* VerticalHeaderCell.xib */; };
+		2C0FE3062B4F3846002A7E94 /* HorizontalHeaderCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2C0FE3052B4F3846002A7E94 /* HorizontalHeaderCell.xib */; };
 		2C20A8782B3010BD00225EA3 /* ContentTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20A8772B3010BD00225EA3 /* ContentTextEditorView.swift */; };
 		2C20A87E2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C20A87D2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift */; };
 		2C2A084B2B319D7C0087210B /* CurrentValueSubject+Init.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C2A084A2B319D7C0087210B /* CurrentValueSubject+Init.swift */; };
@@ -95,6 +100,11 @@
 		2C0FE2D02B4DF31B002A7E94 /* IPDFMacEventBus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IPDFMacEventBus.h; sourceTree = "<group>"; };
 		2C0FE2DE2B4DF31B002A7E94 /* IPDFMacEventBus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IPDFMacEventBus.m; sourceTree = "<group>"; };
 		2C0FE2F82B4DF4D3002A7E94 /* Commatoze-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Commatoze-Bridging-Header.h"; sourceTree = "<group>"; };
+		2C0FE2FA2B4EE36B002A7E94 /* HorizontalHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalHeaderCell.swift; sourceTree = "<group>"; };
+		2C0FE2FF2B4F0396002A7E94 /* CellResizerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellResizerDelegate.swift; sourceTree = "<group>"; };
+		2C0FE3012B4F08EF002A7E94 /* VerticalHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalHeaderCell.swift; sourceTree = "<group>"; };
+		2C0FE3032B4F2996002A7E94 /* VerticalHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VerticalHeaderCell.xib; sourceTree = "<group>"; };
+		2C0FE3052B4F3846002A7E94 /* HorizontalHeaderCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HorizontalHeaderCell.xib; sourceTree = "<group>"; };
 		2C20A8772B3010BD00225EA3 /* ContentTextEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTextEditorView.swift; sourceTree = "<group>"; };
 		2C20A87D2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+ContentTextEditorViewDelegate.swift"; sourceTree = "<group>"; };
 		2C2A084A2B319D7C0087210B /* CurrentValueSubject+Init.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CurrentValueSubject+Init.swift"; sourceTree = "<group>"; };
@@ -153,6 +163,18 @@
 			);
 			name = "Catalyst-Helpers";
 			path = "Lib/Catalyst-Helpers";
+			sourceTree = "<group>";
+		};
+		2C0FE2FC2B4EE3D2002A7E94 /* SheetViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				2C0FE2FF2B4F0396002A7E94 /* CellResizerDelegate.swift */,
+				2C0FE2FA2B4EE36B002A7E94 /* HorizontalHeaderCell.swift */,
+				2C0FE3052B4F3846002A7E94 /* HorizontalHeaderCell.xib */,
+				2C0FE3012B4F08EF002A7E94 /* VerticalHeaderCell.swift */,
+				2C0FE3032B4F2996002A7E94 /* VerticalHeaderCell.xib */,
+			);
+			path = SheetViewCells;
 			sourceTree = "<group>";
 		};
 		2C2A08452B319D6F0087210B /* Core */ = {
@@ -232,6 +254,7 @@
 				2C9327232B4B3FD50069F308 /* ContentTableViewController+UIDropInteractionDelegate .swift */,
 				2C20A8772B3010BD00225EA3 /* ContentTextEditorView.swift */,
 				2C70E6A62B2F370900B82168 /* MainMenu.swift */,
+				2C0FE2FC2B4EE3D2002A7E94 /* SheetViewCells */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -439,7 +462,9 @@
 				2C917CE72B20DB54005FCFB1 /* LaunchScreen.storyboard in Resources */,
 				2C917CE42B20DB54005FCFB1 /* Assets.xcassets in Resources */,
 				2C7487622B21D4DD001D134B /* test.csv in Resources */,
+				2C0FE3042B4F2996002A7E94 /* VerticalHeaderCell.xib in Resources */,
 				2C917CE22B20DB53005FCFB1 /* ContentTable.storyboard in Resources */,
+				2C0FE3062B4F3846002A7E94 /* HorizontalHeaderCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -459,11 +484,14 @@
 				2C917CDB2B20DB53005FCFB1 /* AppDelegate.swift in Sources */,
 				2C70E6A72B2F370900B82168 /* MainMenu.swift in Sources */,
 				2C9327242B4B3FD50069F308 /* ContentTableViewController+UIDropInteractionDelegate .swift in Sources */,
+				2C0FE2FB2B4EE36B002A7E94 /* HorizontalHeaderCell.swift in Sources */,
 				2CEF0C182B3EEBA6005E9D89 /* Storyboarded.swift in Sources */,
+				2C0FE3022B4F08EF002A7E94 /* VerticalHeaderCell.swift in Sources */,
 				2CC9DD742B3DD0A100AB8AD0 /* Coordinator.swift in Sources */,
 				2C20A8782B3010BD00225EA3 /* ContentTextEditorView.swift in Sources */,
 				2CEF0C1A2B3EEE96005E9D89 /* ContentTableViewController+Storyboarded.swift in Sources */,
 				2C5984352B459E5000E0CEF3 /* DocumentPickerController.swift in Sources */,
+				2C0FE3002B4F0396002A7E94 /* CellResizerDelegate.swift in Sources */,
 				2C20A87E2B301AAF00225EA3 /* ContentTableViewController+ContentTextEditorViewDelegate.swift in Sources */,
 				2C70E6A02B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift in Sources */,
 				2CEF0C162B3EEA4E005E9D89 /* ContentTableSceneDelegate.swift in Sources */,

@@ -13,6 +13,9 @@ class ContentTableViewController: UIViewController {
 	let isPickingFile = CurrentValueSubject(value: false)
 	var currentEditor: UITextView?
 
+	private(set) var horizontalResizer: HorizontalCellResizer!
+	private(set) var verticalResizer: VerticalCellResizer!
+
 	private var subscriptions = Set<AnyCancellable>()
 
 	override func viewDidLoad() {
@@ -162,10 +165,13 @@ class ContentTableViewController: UIViewController {
 	
 	private func setupSheet() {
 		sheet.register(SheetViewLabelCell.self, forCellReuseIdentifier: "cell")
-		sheet.register(SheetViewLabelCell.self, forCellReuseIdentifier: "top")
-		sheet.register(SheetViewLabelCell.self, forCellReuseIdentifier: "left")
+		sheet.register(.init(nibName: "HorizontalHeaderCell", bundle: .main), forCellReuseIdentifier: "top")
+		sheet.register(.init(nibName: "VerticalHeaderCell", bundle: .main), forCellReuseIdentifier: "left")
 		sheet.dataSource = self
 		sheet.delegate = self
+
+		horizontalResizer = .init(sheet: sheet)
+		verticalResizer = .init(sheet: sheet)
 	}
 
 	private func setupCurrentFile() {
@@ -447,6 +453,50 @@ extension ContentTableViewController {
 
 	@objc func deleteAction(_ sender: UICommand) {
 		delete(self)
+	}
+}
+
+class HorizontalCellResizer: CellResizerDelegate {
+
+	private weak var sheet: SheetView?
+
+	init(sheet: SheetView?) {
+		self.sheet = sheet
+	}
+
+	func cellBeganResizing(_ cell: Spreadsheet.SheetViewCell) {
+		sheet?.beginResizingColumn(at: cell.sheetIndex.col)
+	}
+
+	func cell(_ cell: Spreadsheet.SheetViewCell, updatedResizingTo size: CGFloat) {
+		sheet?.updateResizingColumn(at: cell.sheetIndex.col, to: size)
+	}
+
+	func cell(_ cell: Spreadsheet.SheetViewCell, endedResizingTo size: CGFloat) {
+		sheet?.endResizingColumn()
+		sheet?.setWidth(size, for: cell.sheetIndex.col)
+	}
+}
+
+class VerticalCellResizer: CellResizerDelegate {
+
+	private weak var sheet: SheetView?
+
+	init(sheet: SheetView?) {
+		self.sheet = sheet
+	}
+
+	func cellBeganResizing(_ cell: Spreadsheet.SheetViewCell) {
+		sheet?.beginResizingRow(at: cell.sheetIndex.row)
+	}
+
+	func cell(_ cell: Spreadsheet.SheetViewCell, updatedResizingTo size: CGFloat) {
+		sheet?.updateResizingRow(at: cell.sheetIndex.row, to: size)
+	}
+
+	func cell(_ cell: Spreadsheet.SheetViewCell, endedResizingTo size: CGFloat) {
+		sheet?.endResizingRow()
+		sheet?.setHeight(size, for: cell.sheetIndex.row)
 	}
 }
 
