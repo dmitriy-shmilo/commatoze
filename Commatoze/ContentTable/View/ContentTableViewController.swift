@@ -222,6 +222,24 @@ class ContentTableViewController: UIViewController {
 				self?.sheet.reloadCellAt(index: index)
 			}
 			.store(in: &subscriptions)
+
+		viewModel.data
+			.sink { [weak self] _ in
+				self?.sheet.reloadData()
+			}
+			.store(in: &subscriptions)
+
+		viewModel.rows
+			.sink { [weak self] _ in
+				self?.sheet.reloadData()
+			}
+			.store(in: &subscriptions)
+
+		viewModel.columns
+			.sink { [weak self] _ in
+				self?.sheet.reloadData()
+			}
+			.store(in: &subscriptions)
 	}
 
 	private func setupLoadingOverlay() {
@@ -482,20 +500,41 @@ extension ContentTableViewController {
 	}
 
 	// MARK: - Data
+	// TODO: extract into a separate menu controller
 	@objc func insertColumnBefore(_ sender: UICommand) {
-
+		let column = sheet
+			.currentSelection
+			.topLeft(in: sheet)
+			.firstIndex(in: sheet)
+			.col
+		viewModel.insertColumn(at: column)
 	}
 
 	@objc func insertColumnAfter(_ sender: UICommand) {
-
+		let column = sheet
+			.currentSelection
+			.topLeft(in: sheet)
+			.firstIndex(in: sheet)
+			.col + 1
+		viewModel.insertColumn(at: column)
 	}
 
 	@objc func insertRowBefore(_ sender: UICommand) {
-
+		let row = sheet
+			.currentSelection
+			.topLeft(in: sheet)
+			.firstIndex(in: sheet)
+			.row
+		viewModel.insertRow(at: row)
 	}
 
 	@objc func insertRowAfter(_ sender: UICommand) {
-
+		let row = sheet
+			.currentSelection
+			.topLeft(in: sheet)
+			.firstIndex(in: sheet)
+			.row + 1
+		viewModel.insertRow(at: row)
 	}
 }
 

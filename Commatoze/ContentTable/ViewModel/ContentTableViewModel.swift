@@ -178,6 +178,60 @@ class ContentTableViewModel {
 		undoStackChanged.send()
 	}
 
+	// MARK: - Layout Editing
+	func insertColumn(at insertIndex: Int) {
+		// TODO: make async
+		let oldData = data.value
+		let rowCount = rows.value.count
+		let columnCount = columns.value.count
+
+		guard insertIndex >= 0 && insertIndex <= columnCount else {
+			return
+		}
+
+		var newData = [String]()
+		newData.reserveCapacity(oldData.count + rowCount)
+
+		for y in 0..<rowCount {
+			for x in 0..<columnCount {
+				let oldIndex = x + y * columnCount
+				if oldIndex % columnCount == insertIndex {
+					newData.append("")
+				}
+
+				newData.append(oldData[oldIndex])
+
+				// special case when inserting a column after the last one
+				if insertIndex == columnCount && oldIndex % columnCount == columnCount - 1 {
+					newData.append("")
+				}
+			}
+		}
+
+		var newColumns = columns.value
+		newColumns.insert("", at: insertIndex)
+
+		columns.send(newColumns)
+		data.send(newData)
+	}
+
+	func insertRow(at insertIndex: Int) {
+		let oldData = data.value
+		let rowCount = rows.value.count
+		let columnCount = columns.value.count
+
+		guard insertIndex >= 0 && insertIndex <= rowCount else {
+			return
+		}
+
+		var newData = oldData
+		let newRow = (0..<columnCount).map { _ in "" }
+		newData.reserveCapacity(oldData.count + columnCount)
+		newData.insert(contentsOf: newRow, at: insertIndex * columnCount)
+
+		data.send(newData)
+	}
+
 	// MARK: - Setup
 	private func setupUndoManager() {
 		undoStackChanged
@@ -282,8 +336,10 @@ extension ContentTableViewModel: CSVReaderDelegate {
 	}
 
 	func csvReaderDidFinish(_ reader: LibCSV.CSVReader) {
-		data.send(rawData)
-		columns.send(rawColumns)
-		currentFile.send(rawUrl)
+		DispatchQueue.main.async {
+			self.data.send(self.rawData)
+			self.columns.send(self.rawColumns)
+			self.currentFile.send(self.rawUrl)
+		}
 	}
 }
