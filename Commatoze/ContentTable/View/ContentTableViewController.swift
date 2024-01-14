@@ -63,6 +63,32 @@ class ContentTableViewController: UIViewController {
 			return viewModel.canRedo.value
 		}
 
+		let rowActions = [
+			#selector(insertRowBefore(_:)),
+			#selector(insertRowAfter(_:))
+		]
+
+		if rowActions.contains(action) {
+			return currentEditor == nil
+			&& sheet.currentSelection
+				.topLeft(in: sheet)
+				.firstIndex(in: sheet)
+				.row != SheetIndex.invalid.row
+		}
+
+		let columnActions = [
+			#selector(insertColumnAfter(_:)),
+			#selector(insertColumnBefore(_:))
+		]
+
+		if columnActions.contains(action) {
+			return currentEditor == nil
+			&& sheet.currentSelection
+				.topLeft(in: sheet)
+				.firstIndex(in: sheet)
+				.col != SheetIndex.invalid.col
+		}
+
 		return super.canPerformAction(action, withSender: sender)
 	}
 
@@ -453,6 +479,23 @@ extension ContentTableViewController {
 
 	@objc func deleteAction(_ sender: UICommand) {
 		delete(self)
+	}
+
+	// MARK: - Data
+	@objc func insertColumnBefore(_ sender: UICommand) {
+
+	}
+
+	@objc func insertColumnAfter(_ sender: UICommand) {
+
+	}
+
+	@objc func insertRowBefore(_ sender: UICommand) {
+
+	}
+
+	@objc func insertRowAfter(_ sender: UICommand) {
+
 	}
 }
 

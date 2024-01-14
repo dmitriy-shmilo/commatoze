@@ -42,6 +42,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		builder.replaceChildren(ofMenu: .edit) { _ in
 			MainMenu.editMenu()
 		}
+
+		builder.insertSibling(
+			MainMenu.dataMenu(),
+			afterMenu: .edit)
 	}
 }
 

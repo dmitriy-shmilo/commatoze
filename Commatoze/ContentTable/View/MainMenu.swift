@@ -74,4 +74,36 @@ struct MainMenu {
 
 		return [undoMenu, editMenu]
 	}
+
+	static func dataMenu() -> UIMenu {
+		let insertColBefore = UICommand(
+			title: NSLocalizedString("Insert Column Before", comment: ""),
+			action: #selector(ContentTableViewController.insertColumnBefore(_:))
+		)
+
+		let insertColAfter = UICommand(
+			title: NSLocalizedString("Insert Column After", comment: ""),
+			action: #selector(ContentTableViewController.insertColumnAfter(_:))
+		)
+
+		let columnMenu = UIMenu(options: .displayInline, children: [insertColBefore, insertColAfter])
+
+		let insertRowBefore = UICommand(
+			title: NSLocalizedString("Insert Row Before", comment: ""),
+			action: #selector(ContentTableViewController.insertRowBefore(_:))
+		)
+
+		let insertRowAfter = UICommand(
+			title: NSLocalizedString("Insert Row After", comment: ""),
+			action: #selector(ContentTableViewController.insertRowAfter(_:))
+		)
+
+		let rowMenu = UIMenu(options: .displayInline, children: [insertRowBefore, insertRowAfter])
+
+		let dataMenu = UIMenu(
+			title: NSLocalizedString("Data", comment: "Data"),
+			children: [columnMenu, rowMenu])
+		
+		return dataMenu
+	}
 }
