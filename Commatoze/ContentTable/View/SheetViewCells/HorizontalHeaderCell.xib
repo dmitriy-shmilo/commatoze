@@ -24,10 +24,15 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IQP-41-Ni0">
                     <rect key="frame" x="284" y="0.0" width="16" height="45"/>
                     <subviews>
-                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="capsule.portrait.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="48y-Wj-1Hc">
-                            <rect key="frame" x="4" y="7" width="8" height="31"/>
-                            <color key="tintColor" systemColor="tertiaryLabelColor"/>
-                        </imageView>
+                        <view hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="48y-Wj-1Hc">
+                            <rect key="frame" x="4" y="8" width="8" height="29"/>
+                            <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="4"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
                     </subviews>
                     <constraints>
                         <constraint firstItem="48y-Wj-1Hc" firstAttribute="top" secondItem="IQP-41-Ni0" secondAttribute="top" constant="8" id="Owj-db-sAd"/>
@@ -60,7 +65,6 @@
         </view>
     </objects>
     <resources>
-        <image name="capsule.portrait.fill" catalog="system" width="108" height="128"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

@@ -23,10 +23,15 @@
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fy-kc-Ozz">
                     <rect key="frame" x="0.0" y="284" width="45" height="16"/>
                     <subviews>
-                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="capsule.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="As8-2o-rQk">
-                            <rect key="frame" x="8" y="5.3333333333333339" width="29" height="6"/>
-                            <color key="tintColor" systemColor="tertiaryLabelColor"/>
-                        </imageView>
+                        <view hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="As8-2o-rQk">
+                            <rect key="frame" x="8" y="4" width="29" height="8"/>
+                            <color key="backgroundColor" systemColor="tertiaryLabelColor"/>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                    <real key="value" value="4"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </view>
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="As8-2o-rQk" secondAttribute="trailing" constant="8" id="0wq-Me-y1z"/>
@@ -58,7 +63,6 @@
         </view>
     </objects>
     <resources>
-        <image name="capsule.fill" catalog="system" width="128" height="95"/>
         <systemColor name="secondaryLabelColor">
             <color red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
