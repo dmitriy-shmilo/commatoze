@@ -2,11 +2,28 @@
 
 import UIKit
 
-struct MainMenu {
-	static func fileMenu() -> [UIMenuElement] {
+extension MainMenuController: MenuBuilder {
+	static func buildMenu(with builder: UIMenuBuilder) {
+		builder.remove(menu: .format)
+		builder.remove(menu: .view)
+
+		builder.replaceChildren(ofMenu: .file) { _ in
+			Self.fileMenu()
+		}
+
+		builder.replaceChildren(ofMenu: .edit) { _ in
+			Self.editMenu()
+		}
+
+		builder.insertSibling(
+			Self.dataMenu(),
+			afterMenu: .edit)
+	}
+
+	private static func fileMenu() -> [UIMenuElement] {
 		let open = UIKeyCommand(
 			title: NSLocalizedString("Open...", comment: "Open"),
-			action: #selector(ContentTableViewController.openAction(_:)),
+			action: #selector(openAction(_:)),
 			input: "o",
 			modifierFlags: .command)
 
@@ -14,7 +31,7 @@ struct MainMenu {
 			title: NSLocalizedString(
 				"Open in This Window",
 				comment: "Open file replacing current content"),
-			action: #selector(ContentTableViewController.openAndReplaceAction(_:)),
+			action: #selector(openAndReplaceAction(_:)),
 			input: "o",
 			modifierFlags: [.command, .shift])
 
@@ -22,13 +39,13 @@ struct MainMenu {
 
 		let save = UIKeyCommand(
 			title: NSLocalizedString("Save", comment: "Save"),
-			action: #selector(ContentTableViewController.saveAction(_:)),
+			action: #selector(saveAction(_:)),
 			input: "s",
 			modifierFlags: .command)
 
 		let saveAs = UIKeyCommand(
 			title: NSLocalizedString("Save As...", comment: "Save"),
-			action: #selector(ContentTableViewController.saveAsAction(_:)),
+			action: #selector(saveAsAction(_:)),
 			input: "s",
 			modifierFlags: [.command, .shift])
 
@@ -37,37 +54,37 @@ struct MainMenu {
 		return [openMenu, saveMenu]
 	}
 
-	static func editMenu() -> [UIMenuElement] {
+	private static func editMenu() -> [UIMenuElement] {
 		let undo = UIKeyCommand(
 			title: NSLocalizedString("Undo", comment: "Undo"),
-			action: #selector(ContentTableViewController.undoAction(_:)),
+			action: #selector(undoAction(_:)),
 			input: "z",
 			modifierFlags: .command)
 		let redo = UIKeyCommand(
 			title: NSLocalizedString("Redo", comment: "Redo"),
-			action: #selector(ContentTableViewController.redoAction(_:)),
+			action: #selector(redoAction(_:)),
 			input: "z",
 			modifierFlags: [.command, .shift])
 		let undoMenu = UIMenu(options: .displayInline, children: [undo, redo])
 
 		let cut = UIKeyCommand(
 			title: NSLocalizedString("Cut", comment: "Cut"),
-			action: #selector(ContentTableViewController.cutAction(_:)),
+			action: #selector(cutAction(_:)),
 			input: "x",
 			modifierFlags: .command)
 		let copy = UIKeyCommand(
 			title: NSLocalizedString("Copy", comment: "Copy"),
-			action: #selector(ContentTableViewController.copyAction(_:)),
+			action: #selector(copyAction(_:)),
 			input: "c",
 			modifierFlags: .command)
 		let paste = UIKeyCommand(
 			title: NSLocalizedString("Paste", comment: "Paste"),
-			action: #selector(ContentTableViewController.pasteAction(_:)),
+			action: #selector(pasteAction(_:)),
 			input: "v",
 			modifierFlags: .command)
 		let delete = UIKeyCommand(
 			title: NSLocalizedString("Delete", comment: "Delete"),
-			action: #selector(ContentTableViewController.deleteAction(_:)),
+			action: #selector(deleteAction(_:)),
 			input: "\u{8}",
 			modifierFlags: .command)
 		let editMenu = UIMenu(options: .displayInline, children: [cut, copy, paste, delete])
@@ -75,27 +92,27 @@ struct MainMenu {
 		return [undoMenu, editMenu]
 	}
 
-	static func dataMenu() -> UIMenu {
+	private static func dataMenu() -> UIMenu {
 		let insertColBefore = UICommand(
 			title: NSLocalizedString("Insert Column Before", comment: ""),
-			action: #selector(ContentTableViewController.insertColumnBefore(_:))
+			action: #selector(insertColumnBefore(_:))
 		)
 
 		let insertColAfter = UICommand(
 			title: NSLocalizedString("Insert Column After", comment: ""),
-			action: #selector(ContentTableViewController.insertColumnAfter(_:))
+			action: #selector(insertColumnAfter(_:))
 		)
 
 		let columnMenu = UIMenu(options: .displayInline, children: [insertColBefore, insertColAfter])
 
 		let insertRowBefore = UICommand(
 			title: NSLocalizedString("Insert Row Before", comment: ""),
-			action: #selector(ContentTableViewController.insertRowBefore(_:))
+			action: #selector(insertRowBefore(_:))
 		)
 
 		let insertRowAfter = UICommand(
 			title: NSLocalizedString("Insert Row After", comment: ""),
-			action: #selector(ContentTableViewController.insertRowAfter(_:))
+			action: #selector(insertRowAfter(_:))
 		)
 
 		let rowMenu = UIMenu(options: .displayInline, children: [insertRowBefore, insertRowAfter])
@@ -103,7 +120,7 @@ struct MainMenu {
 		let dataMenu = UIMenu(
 			title: NSLocalizedString("Data", comment: "Data"),
 			children: [columnMenu, rowMenu])
-		
+
 		return dataMenu
 	}
 }

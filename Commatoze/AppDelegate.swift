@@ -32,20 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 	}
 
 	override func buildMenu(with builder: UIMenuBuilder) {
-		builder.remove(menu: .format)
-		builder.remove(menu: .view)
-
-		builder.replaceChildren(ofMenu: .file) { _ in
-			MainMenu.fileMenu()
-		}
-
-		builder.replaceChildren(ofMenu: .edit) { _ in
-			MainMenu.editMenu()
-		}
-
-		builder.insertSibling(
-			MainMenu.dataMenu(),
-			afterMenu: .edit)
+		MainMenuController.buildMenu(with: builder)
 	}
 }
 

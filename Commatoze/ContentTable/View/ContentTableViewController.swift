@@ -8,6 +8,7 @@ class ContentTableViewController: UIViewController {
 	@IBOutlet private weak var sheet: SheetView!
 	@IBOutlet private weak var loadingOverlay: UIView!
 
+	var mainMenuController: MainMenuController!
 	weak var coordinator: ContentTableCoordinator?
 	var viewModel: ContentTableViewModel!
 	let isPickingFile = CurrentValueSubject(value: false)
@@ -40,99 +41,36 @@ class ContentTableViewController: UIViewController {
 		super.pressesBegan(presses, with: event)
 	}
 
-	// MARK: - Menu Overrides
 	override func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-		let selectionActions = [
-			#selector(cutAction(_:)),
-			#selector(copyAction(_:)),
-			#selector(pasteAction(_:)),
-			#selector(deleteAction(_:)),
-		]
-		if selectionActions.contains(action) {
-			return currentEditor == nil
-			&& sheet.currentSelection
-				.topLeft(in: sheet)
-				.firstIndex(in: sheet) != .invalid
+		return mainMenuController.canPerformAction(action, withSender: sender)
+		|| super.canPerformAction(action, withSender: sender)
+	}
+
+	override func target(forAction action: Selector, withSender sender: Any?) -> Any? {
+		if mainMenuController.canPerformAction(action, withSender: sender) {
+			return mainMenuController
 		}
 
-		if action == #selector(undoAction(_:)) {
-			return viewModel.canUndo.value
-		}
-
-		if action == #selector(redoAction(_:)) {
-			return viewModel.canRedo.value
-		}
-
-		let rowActions = [
-			#selector(insertRowBefore(_:)),
-			#selector(insertRowAfter(_:))
-		]
-
-		if rowActions.contains(action) {
-			return currentEditor == nil
-			&& sheet.currentSelection
-				.topLeft(in: sheet)
-				.firstIndex(in: sheet)
-				.row != SheetIndex.invalid.row
-		}
-
-		let columnActions = [
-			#selector(insertColumnAfter(_:)),
-			#selector(insertColumnBefore(_:))
-		]
-
-		if columnActions.contains(action) {
-			return currentEditor == nil
-			&& sheet.currentSelection
-				.topLeft(in: sheet)
-				.firstIndex(in: sheet)
-				.col != SheetIndex.invalid.col
-		}
-
-		return super.canPerformAction(action, withSender: sender)
+		return super.target(forAction: action, withSender: sender)
 	}
 
 	override func copy(_ sender: Any?) {
-		let topLeft = sheet.currentSelection.topLeft(in: sheet).firstIndex(in: sheet)
-		guard topLeft != .invalid else {
-			return
-		}
-
-		UIPasteboard.general.string = viewModel.getField(at: topLeft)
+		mainMenuController.copyAction(sender as? UICommand)
 	}
 
 	override func paste(_ sender: Any?) {
-		guard let value = UIPasteboard.general.string,
-			  value.count > 0 else {
-			return
-		}
-		let topLeft = sheet.currentSelection.topLeft(in: sheet).firstIndex(in: sheet)
-		guard topLeft != .invalid else {
-			return
-		}
-
-		viewModel.setField(at: topLeft, to: value)
+		mainMenuController.pasteAction(sender as? UICommand)
 	}
 
 	override func delete(_ sender: Any?) {
-		let topLeft = sheet.currentSelection.topLeft(in: sheet).firstIndex(in: sheet)
-		guard topLeft != .invalid else {
-			return
-		}
-
-		viewModel.setField(at: topLeft, to: "")
+		mainMenuController.deleteAction(sender as? UICommand)
 	}
 
 	override func cut(_ sender: Any?) {
-		let topLeft = sheet.currentSelection.topLeft(in: sheet).firstIndex(in: sheet)
-		guard topLeft != .invalid else {
-			return
-		}
-
-		UIPasteboard.general.string = viewModel.getField(at: topLeft)
-		viewModel.setField(at: topLeft, to: "")
+		mainMenuController.deleteAction(sender as? UICommand)
 	}
 
+	// MARK: - Editing
 	func closeCellEditor(
 		_ editor: ContentTextEditorView,
 		at index: SheetIndex,
@@ -148,37 +86,6 @@ class ContentTableViewController: UIViewController {
 		sheet.endEditCell()
 	}
 
-	// MARK: - Menu Actions
-	func openFile(andReplace replace: Bool) {
-		coordinator?.presentOpenFilePicker(willReplaceContent: replace)
-	}
-
-	func saveFile(andReplace replace: Bool) {
-		if let url = viewModel.currentFile.value, replace {
-			viewModel.saveFile(to: url)
-			return
-		}
-
-		viewModel.saveTempFile()
-		if let tempUrl = viewModel.tempUrl {
-			coordinator?.presentSaveFilePicker(for: tempUrl)
-		}
-	}
-
-	func undo() {
-		guard viewModel.canUndo.value else {
-			return
-		}
-		viewModel.undo()
-	}
-
-	func redo() {
-		guard viewModel.canRedo.value else {
-			return
-		}
-		viewModel.redo()
-	}
-
 	// MARK: - Setup
 	private func setup() {
 		subscriptions.removeAll()
@@ -187,6 +94,7 @@ class ContentTableViewController: UIViewController {
 		setupCurrentFile()
 		setupCells()
 		setupInteractions()
+		setupMainMenu()
 	}
 	
 	private func setupSheet() {
@@ -254,6 +162,15 @@ class ContentTableViewController: UIViewController {
 	private func setupInteractions() {
 		let dropInteraction = UIDropInteraction(delegate: self)
 		view.addInteraction(dropInteraction)
+	}
+
+	private func setupMainMenu() {
+		guard let sheet = sheet,
+			  let coordinator = coordinator,
+			  let viewModel = viewModel else {
+			return
+		}
+		mainMenuController = MainMenuController(sheet: sheet, coordinator: coordinator, viewModel: viewModel)
 	}
 }
 
@@ -455,88 +372,6 @@ extension ContentTableViewController {
 	}
 }
 
-// MARK: - Menu Actions
-extension ContentTableViewController {
-	// MARK: - File
-	@objc func openAction(_ sender: UICommand) {
-		openFile(andReplace: false)
-	}
-
-	@objc func openAndReplaceAction(_ sender: UICommand) {
-		openFile(andReplace: true)
-	}
-
-	@objc func saveAction(_ sender: UICommand) {
-		saveFile(andReplace: true)
-	}
-
-	@objc func saveAsAction(_ sender: UICommand) {
-		saveFile(andReplace: false)
-	}
-
-	// MARK: - Edit
-	@objc func undoAction(_ sender: UICommand) {
-		undo()
-	}
-
-	@objc func redoAction(_ sender: UICommand) {
-		redo()
-	}
-	
-	@objc func copyAction(_ sender: UICommand) {
-		copy(self)
-	}
-
-	@objc func pasteAction(_ sender: UICommand) {
-		paste(self)
-	}
-
-	@objc func cutAction(_ sender: UICommand) {
-		cut(self)
-	}
-
-	@objc func deleteAction(_ sender: UICommand) {
-		delete(self)
-	}
-
-	// MARK: - Data
-	// TODO: extract into a separate menu controller
-	@objc func insertColumnBefore(_ sender: UICommand) {
-		let column = sheet
-			.currentSelection
-			.topLeft(in: sheet)
-			.firstIndex(in: sheet)
-			.col
-		viewModel.insertColumn(at: column)
-	}
-
-	@objc func insertColumnAfter(_ sender: UICommand) {
-		let column = sheet
-			.currentSelection
-			.topLeft(in: sheet)
-			.firstIndex(in: sheet)
-			.col + 1
-		viewModel.insertColumn(at: column)
-	}
-
-	@objc func insertRowBefore(_ sender: UICommand) {
-		let row = sheet
-			.currentSelection
-			.topLeft(in: sheet)
-			.firstIndex(in: sheet)
-			.row
-		viewModel.insertRow(at: row)
-	}
-
-	@objc func insertRowAfter(_ sender: UICommand) {
-		let row = sheet
-			.currentSelection
-			.topLeft(in: sheet)
-			.firstIndex(in: sheet)
-			.row + 1
-		viewModel.insertRow(at: row)
-	}
-}
 
 class HorizontalCellResizer: CellResizerDelegate {
 

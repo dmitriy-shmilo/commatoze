@@ -26,7 +26,6 @@
 		2C70E6A02B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C70E69F2B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift */; };
 		2C70E6A22B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C70E6A12B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift */; };
 		2C70E6A42B2F299000B82168 /* SheetSelection+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C70E6A32B2F299000B82168 /* SheetSelection+Util.swift */; };
-		2C70E6A72B2F370900B82168 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C70E6A62B2F370900B82168 /* MainMenu.swift */; };
 		2C74875E2B21D43E001D134B /* LibCSV.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C74875B2B21D42D001D134B /* LibCSV.framework */; };
 		2C74875F2B21D43E001D134B /* LibCSV.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C74875B2B21D42D001D134B /* LibCSV.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C8ABFDC2B32D96F00C7330B /* SheetIndex+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8ABFDB2B32D96F00C7330B /* SheetIndex+Util.swift */; };
@@ -37,6 +36,9 @@
 		2C917CE42B20DB54005FCFB1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2C917CE32B20DB54005FCFB1 /* Assets.xcassets */; };
 		2C917CE72B20DB54005FCFB1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C917CE52B20DB54005FCFB1 /* LaunchScreen.storyboard */; };
 		2C9327242B4B3FD50069F308 /* ContentTableViewController+UIDropInteractionDelegate .swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9327232B4B3FD50069F308 /* ContentTableViewController+UIDropInteractionDelegate .swift */; };
+		2C943CAB2B569DBD005EDEA9 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C943CAA2B569DBD005EDEA9 /* MainMenuController.swift */; };
+		2C943CB22B569EED005EDEA9 /* MainMenuController+MenuBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C943CB12B569EED005EDEA9 /* MainMenuController+MenuBuilder.swift */; };
+		2C943CB42B569F0D005EDEA9 /* MenuBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C943CB32B569F0D005EDEA9 /* MenuBuilder.swift */; };
 		2CC9DD742B3DD0A100AB8AD0 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD732B3DD0A100AB8AD0 /* Coordinator.swift */; };
 		2CC9DD772B3DD33900AB8AD0 /* ContentTableCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD762B3DD33900AB8AD0 /* ContentTableCoordinator.swift */; };
 		2CC9DD792B3DD7E800AB8AD0 /* CoordinatorBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9DD782B3DD7E800AB8AD0 /* CoordinatorBase.swift */; };
@@ -116,7 +118,6 @@
 		2C70E69F2B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+SheetViewDataSource.swift"; sourceTree = "<group>"; };
 		2C70E6A12B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+SheetViewDelegate.swift"; sourceTree = "<group>"; };
 		2C70E6A32B2F299000B82168 /* SheetSelection+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SheetSelection+Util.swift"; sourceTree = "<group>"; };
-		2C70E6A62B2F370900B82168 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		2C7487552B21D42D001D134B /* LibCSV.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LibCSV.xcodeproj; path = Lib/LibCSV/LibCSV.xcodeproj; sourceTree = "<group>"; };
 		2C8ABFDB2B32D96F00C7330B /* SheetIndex+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SheetIndex+Util.swift"; sourceTree = "<group>"; };
 		2C917CD72B20DB53005FCFB1 /* Commatoze.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Commatoze.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -129,6 +130,9 @@
 		2C917CE82B20DB54005FCFB1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2C917CEE2B20DB68005FCFB1 /* Commatoze.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commatoze.entitlements; sourceTree = "<group>"; };
 		2C9327232B4B3FD50069F308 /* ContentTableViewController+UIDropInteractionDelegate .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+UIDropInteractionDelegate .swift"; sourceTree = "<group>"; };
+		2C943CAA2B569DBD005EDEA9 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
+		2C943CB12B569EED005EDEA9 /* MainMenuController+MenuBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MainMenuController+MenuBuilder.swift"; sourceTree = "<group>"; };
+		2C943CB32B569F0D005EDEA9 /* MenuBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBuilder.swift; sourceTree = "<group>"; };
 		2CC9DD732B3DD0A100AB8AD0 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		2CC9DD762B3DD33900AB8AD0 /* ContentTableCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentTableCoordinator.swift; sourceTree = "<group>"; };
 		2CC9DD782B3DD7E800AB8AD0 /* CoordinatorBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorBase.swift; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 			children = (
 				2CC9DD6E2B3DD08F00AB8AD0 /* Coordinator */,
 				2C2A084A2B319D7C0087210B /* CurrentValueSubject+Init.swift */,
+				2C943CB32B569F0D005EDEA9 /* MenuBuilder.swift */,
 				2CEF0C172B3EEBA6005E9D89 /* Storyboarded.swift */,
 				2C6347712B544BEC00D3C0EE /* UIView+Border.swift */,
 			);
@@ -254,7 +259,7 @@
 				2CEF0C192B3EEE96005E9D89 /* ContentTableViewController+Storyboarded.swift */,
 				2C9327232B4B3FD50069F308 /* ContentTableViewController+UIDropInteractionDelegate .swift */,
 				2C20A8772B3010BD00225EA3 /* ContentTextEditorView.swift */,
-				2C70E6A62B2F370900B82168 /* MainMenu.swift */,
+				2C943CB02B569ED8005EDEA9 /* MainMenuController */,
 				2C0FE2FC2B4EE3D2002A7E94 /* SheetViewCells */,
 			);
 			path = View;
@@ -327,6 +332,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		2C943CB02B569ED8005EDEA9 /* MainMenuController */ = {
+			isa = PBXGroup;
+			children = (
+				2C943CAA2B569DBD005EDEA9 /* MainMenuController.swift */,
+				2C943CB12B569EED005EDEA9 /* MainMenuController+MenuBuilder.swift */,
+			);
+			path = MainMenuController;
 			sourceTree = "<group>";
 		};
 		2CC9DD6E2B3DD08F00AB8AD0 /* Coordinator */ = {
@@ -478,10 +492,10 @@
 				2C917CDF2B20DB53005FCFB1 /* ContentTableViewController.swift in Sources */,
 				2C0FE2F52B4DF31B002A7E94 /* IPDFMacEventBus.m in Sources */,
 				2CC9DD7B2B3DD84B00AB8AD0 /* AppCoordinator.swift in Sources */,
+				2C943CB22B569EED005EDEA9 /* MainMenuController+MenuBuilder.swift in Sources */,
 				2C70E6A22B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift in Sources */,
 				2C8ABFDC2B32D96F00C7330B /* SheetIndex+Util.swift in Sources */,
 				2C917CDB2B20DB53005FCFB1 /* AppDelegate.swift in Sources */,
-				2C70E6A72B2F370900B82168 /* MainMenu.swift in Sources */,
 				2C6347722B544BEC00D3C0EE /* UIView+Border.swift in Sources */,
 				2C9327242B4B3FD50069F308 /* ContentTableViewController+UIDropInteractionDelegate .swift in Sources */,
 				2C0FE2FB2B4EE36B002A7E94 /* HorizontalHeaderCell.swift in Sources */,
@@ -496,6 +510,7 @@
 				2C70E6A02B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift in Sources */,
 				2CEF0C162B3EEA4E005E9D89 /* ContentTableSceneDelegate.swift in Sources */,
 				2CEF0C102B3EE9A2005E9D89 /* AppCoordinatorInput.swift in Sources */,
+				2C943CAB2B569DBD005EDEA9 /* MainMenuController.swift in Sources */,
 				2C5984382B459E7B00E0CEF3 /* DocumentPickerCoordinatorInput.swift in Sources */,
 				2CF6A4302B264DF2004FAD45 /* ContentTableViewModel.swift in Sources */,
 				2CC9DD772B3DD33900AB8AD0 /* ContentTableCoordinator.swift in Sources */,
@@ -504,6 +519,7 @@
 				2CEF0C1C2B3EF199005E9D89 /* ContentTableCoordinatorInput.swift in Sources */,
 				2C5984322B45971100E0CEF3 /* DocumentPickerCoordinator.swift in Sources */,
 				2CC9DD792B3DD7E800AB8AD0 /* CoordinatorBase.swift in Sources */,
+				2C943CB42B569F0D005EDEA9 /* MenuBuilder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
