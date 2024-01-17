@@ -59,28 +59,24 @@ class MainMenuController: NSObject {
 
 		let rowActions = [
 			#selector(insertRowBefore(_:)),
-			#selector(insertRowAfter(_:))
+			#selector(insertRowAfter(_:)),
+			#selector(deleteSelectedRows(_:))
 		]
 
 		if rowActions.contains(action) {
 			return !viewModel.isEditing.value
-			&& sheet.currentSelection
-				.topLeft(in: sheet)
-				.firstIndex(in: sheet)
-				.row != SheetIndex.invalid.row
+			&& sheet.currentSelection.isRowSelection()
 		}
 
 		let columnActions = [
 			#selector(insertColumnAfter(_:)),
-			#selector(insertColumnBefore(_:))
+			#selector(insertColumnBefore(_:)),
+			#selector(deleteSelectedColumns(_:))
 		]
 
 		if columnActions.contains(action) {
 			return !viewModel.isEditing.value
-			&& sheet.currentSelection
-				.topLeft(in: sheet)
-				.firstIndex(in: sheet)
-				.col != SheetIndex.invalid.col
+			&& sheet.currentSelection.isColumnSelection()
 		}
 
 		return false
@@ -259,6 +255,46 @@ class MainMenuController: NSObject {
 			.firstIndex(in: sheet)
 			.row + 1
 		viewModel.insertRow(at: row)
+	}
+
+	@objc func deleteSelectedColumns(_ sender: UICommand) {
+		guard let sheet = sheet,
+			  let viewModel = viewModel else {
+			return
+		}
+
+		switch sheet.currentSelection {
+		case .columnRange(let from, let to):
+			viewModel.removeColumns(from: from, to: to + 1)
+		case .columnSet(let set) where !set.isEmpty:
+			// TODO: support deleting all columns in a set
+			guard let index = set.first else {
+				break
+			}
+			viewModel.removeColumns(from: index, to: index + 1)
+		default:
+			break
+		}
+	}
+
+	@objc func deleteSelectedRows(_ sender: UICommand) {
+		guard let sheet = sheet,
+			  let viewModel = viewModel else {
+			return
+		}
+
+		switch sheet.currentSelection {
+		case .rowRange(let from, let to):
+			viewModel.removeColumns(from: from, to: to + 1)
+		case .rowSet(let set) where !set.isEmpty:
+			// TODO: support deleting all rows in a set
+			guard let index = set.first else {
+				break
+			}
+			viewModel.removeRows(from: index, to: index + 1)
+		default:
+			break
+		}
 	}
 }
 

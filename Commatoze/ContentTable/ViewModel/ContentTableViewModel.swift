@@ -206,7 +206,7 @@ class ContentTableViewModel {
 		let rowCount = rows.value.count
 		let columnCount = columns.value.count
 
-		guard insertIndex >= 0 && insertIndex <= columnCount else {
+		guard (0...columnCount).contains(insertIndex) else {
 			return
 		}
 
@@ -215,15 +215,14 @@ class ContentTableViewModel {
 
 		for y in 0..<rowCount {
 			for x in 0..<columnCount {
-				let oldIndex = x + y * columnCount
-				if oldIndex % columnCount == insertIndex {
+				if x == insertIndex {
 					newData.append("")
 				}
 
-				newData.append(oldData[oldIndex])
+				newData.append(oldData[x + y * columnCount])
 
 				// special case when inserting a column after the last one
-				if insertIndex == columnCount && oldIndex % columnCount == columnCount - 1 {
+				if insertIndex == columnCount && x == columnCount - 1 {
 					newData.append("")
 				}
 			}
@@ -241,7 +240,7 @@ class ContentTableViewModel {
 		let rowCount = rows.value.count
 		let columnCount = columns.value.count
 
-		guard insertIndex >= 0 && insertIndex <= rowCount else {
+		guard (0...rowCount).contains(insertIndex) else {
 			return
 		}
 
@@ -250,6 +249,57 @@ class ContentTableViewModel {
 		newData.reserveCapacity(oldData.count + columnCount)
 		newData.insert(contentsOf: newRow, at: insertIndex * columnCount)
 
+		data.send(newData)
+	}
+
+	func removeColumns(from startIndex: Int, to endIndex: Int) {
+		let oldData = data.value
+		let rowCount = rows.value.count
+		let columnCount = columns.value.count
+
+		guard (0..<columnCount).contains(startIndex)
+				&& (0...columnCount).contains(endIndex)
+				&& endIndex > startIndex else {
+			return
+		}
+		let removeRange = startIndex..<endIndex
+
+		var newData = [String]()
+		var newColumns = columns.value
+		newData.reserveCapacity(rowCount * (columnCount - endIndex + startIndex))
+		for y in 0..<rowCount {
+			for x in 0..<columnCount {
+				if removeRange.contains(x) {
+					continue
+				}
+
+				newData.append(oldData[x + y * columnCount])
+			}
+		}
+		newColumns.removeSubrange(removeRange)
+
+		columns.send(newColumns)
+		data.send(newData)
+	}
+
+	func removeRows(from startIndex: Int, to endIndex: Int) {
+		let oldData = data.value
+		let rowCount = rows.value.count
+		let columnCount = columns.value.count
+
+		guard (0..<rowCount).contains(startIndex)
+				&& (0...rowCount).contains(endIndex)
+				&& endIndex > startIndex else {
+			return
+		}
+
+		var newData = oldData
+		var newRows = rows.value
+		newData.reserveCapacity(columnCount * (rowCount - endIndex + startIndex))
+		newData.removeSubrange(startIndex * columnCount..<endIndex * columnCount)
+		newRows.removeSubrange(startIndex..<endIndex)
+
+		rows.send(newRows)
 		data.send(newData)
 	}
 

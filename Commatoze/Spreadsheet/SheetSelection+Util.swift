@@ -34,4 +34,22 @@ extension SheetSelection {
 			return .invalid
 		}
 	}
+
+	func isColumnSelection() -> Bool {
+		switch self {
+		case .columnRange(_, _), .columnSet(_):
+			return true
+		default:
+			return false
+		}
+	}
+
+	func isRowSelection() -> Bool {
+		switch self {
+		case .rowRange(_, _), .rowSet(_):
+			return true
+		default:
+			return false
+		}
+	}
 }

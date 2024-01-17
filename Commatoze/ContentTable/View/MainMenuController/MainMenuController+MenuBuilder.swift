@@ -103,7 +103,14 @@ extension MainMenuController: MenuBuilder {
 			action: #selector(insertColumnAfter(_:))
 		)
 
-		let columnMenu = UIMenu(options: .displayInline, children: [insertColBefore, insertColAfter])
+		let deleteColumns = UICommand(
+			title: NSLocalizedString("Delete Selected Columns", comment: ""),
+			action: #selector(deleteSelectedColumns(_:))
+		)
+
+		let columnMenu = UIMenu(
+			options: .displayInline,
+			children: [insertColBefore, insertColAfter, deleteColumns])
 
 		let insertRowBefore = UICommand(
 			title: NSLocalizedString("Insert Row Before", comment: ""),
@@ -115,7 +122,14 @@ extension MainMenuController: MenuBuilder {
 			action: #selector(insertRowAfter(_:))
 		)
 
-		let rowMenu = UIMenu(options: .displayInline, children: [insertRowBefore, insertRowAfter])
+		let deleteRows = UICommand(
+			title: NSLocalizedString("Delete Selected Rows", comment: ""),
+			action: #selector(deleteSelectedRows(_:))
+		)
+
+		let rowMenu = UIMenu(
+			options: .displayInline,
+			children: [insertRowBefore, insertRowAfter, deleteRows])
 
 		let dataMenu = UIMenu(
 			title: NSLocalizedString("Data", comment: "Data"),
