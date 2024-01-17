@@ -22,8 +22,10 @@ class ContentTableViewModel {
 	let currentFileName = CurrentValueSubject(value: "")
 	let canUndo = CurrentValueSubject(value: false)
 	let canRedo = CurrentValueSubject(value: false)
-	let isBusy = CurrentValueSubject(value: false)
+	let isEditing = CurrentValueSubject(value: false)
 
+	let isBusy = CurrentValueSubject(value: false)
+	let isPickingFile = CurrentValueSubject(value: false)
 	let isLoadingFile = CurrentValueSubject(value: false)
 	let isSavingFile = CurrentValueSubject(value: false)
 
@@ -52,6 +54,16 @@ class ContentTableViewModel {
 		readFile(url: url)
 	}
 
+	// MARK: - File Handling
+	func pickFile() {
+		// TODO: make coordinator calls from here
+		isPickingFile.send(true)
+	}
+
+	func stopPickingFile() {
+		isPickingFile.send(false)
+	}
+	
 	func readFile(url: URL) {
 		guard !isBusy.value else {
 			return
@@ -143,6 +155,15 @@ class ContentTableViewModel {
 				// TODO: report errors to the user
 			}
 		}
+	}
+
+	// MARK: - Editing
+	func startEditing() {
+		isEditing.send(true)
+	}
+
+	func stopEditing() {
+		isEditing.send(false)
 	}
 
 	func setField(at index: SheetIndex, to value: String) {
@@ -278,9 +299,9 @@ class ContentTableViewModel {
 
 	private func setupBusyFlags() {
 		Publishers
-			.CombineLatest(isSavingFile, isLoadingFile)
+			.CombineLatest3(isSavingFile, isLoadingFile, isPickingFile)
 			.map {
-				$0 || $1
+				$0 || $1 || $2
 			}
 			.assign(to: \.value, on: isBusy)
 			.store(in: &subscriptions)

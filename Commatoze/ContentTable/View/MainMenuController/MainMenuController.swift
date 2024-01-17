@@ -8,9 +8,6 @@ class MainMenuController: NSObject {
 	weak var coordinator: ContentTableCoordinator?
 	weak var viewModel: ContentTableViewModel?
 
-	// TODO: a placeholder
-	var currentEditor: Any? = nil
-
 	init(sheet: SheetView? = nil,
 		 coordinator: ContentTableCoordinator? = nil,
 		 viewModel: ContentTableViewModel? = nil) {
@@ -46,7 +43,7 @@ class MainMenuController: NSObject {
 			#selector(deleteAction(_:)),
 		]
 		if selectionActions.contains(action) {
-			return currentEditor == nil
+			return !viewModel.isEditing.value
 			&& sheet.currentSelection
 				.topLeft(in: sheet)
 				.firstIndex(in: sheet) != .invalid
@@ -66,7 +63,7 @@ class MainMenuController: NSObject {
 		]
 
 		if rowActions.contains(action) {
-			return currentEditor == nil
+			return !viewModel.isEditing.value
 			&& sheet.currentSelection
 				.topLeft(in: sheet)
 				.firstIndex(in: sheet)
@@ -79,7 +76,7 @@ class MainMenuController: NSObject {
 		]
 
 		if columnActions.contains(action) {
-			return currentEditor == nil
+			return !viewModel.isEditing.value
 			&& sheet.currentSelection
 				.topLeft(in: sheet)
 				.firstIndex(in: sheet)
@@ -95,6 +92,7 @@ class MainMenuController: NSObject {
 	}
 
 	@objc func openAndReplaceAction(_ sender: UICommand) {
+		viewModel?.pickFile()
 		coordinator?.presentOpenFilePicker(willReplaceContent: true)
 	}
 
@@ -115,6 +113,7 @@ class MainMenuController: NSObject {
 			return
 		}
 		viewModel.saveTempFile()
+		viewModel.pickFile()
 		if let tempUrl = viewModel.tempUrl {
 			coordinator?.presentSaveFilePicker(for: tempUrl)
 		}

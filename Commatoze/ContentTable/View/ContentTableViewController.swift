@@ -11,7 +11,6 @@ class ContentTableViewController: UIViewController {
 	var mainMenuController: MainMenuController!
 	weak var coordinator: ContentTableCoordinator?
 	var viewModel: ContentTableViewModel!
-	let isPickingFile = CurrentValueSubject(value: false)
 	var currentEditor: UITextView?
 
 	private(set) var horizontalResizer: HorizontalCellResizer!
@@ -76,6 +75,7 @@ class ContentTableViewController: UIViewController {
 		at index: SheetIndex,
 		andConfirm confirm: Bool
 	) {
+		viewModel.stopEditing()
 		guard currentEditor == editor else {
 			return
 		}
@@ -152,8 +152,8 @@ class ContentTableViewController: UIViewController {
 
 	private func setupLoadingOverlay() {
 		loadingOverlay.backgroundColor = loadingOverlay.backgroundColor?.withAlphaComponent(0.5)
-		viewModel.isBusy.combineLatest(isPickingFile)
-			.map { (busy, picking) in !(busy || picking) }
+		viewModel.isBusy
+			.map { !$0 }
 			.receive(on: DispatchQueue.main)
 			.assign(to: \.isHidden, on: loadingOverlay)
 			.store(in: &subscriptions)

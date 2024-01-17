@@ -39,6 +39,7 @@ class ContentTableCoordinator: CoordinatorBase {
 		switch coordinator {
 		case is DocumentPickerCoordinator
 			where result == DocumentPickerCoordinator.resultOpen:
+			rootViewController?.viewModel.stopPickingFile()
 			guard let urls = userData as? [URL],
 				  let url = urls.first else {
 				break
@@ -51,6 +52,8 @@ class ContentTableCoordinator: CoordinatorBase {
 			}
 
 			AppCoordinator.shared.startContentTable(url: url)
+		case is DocumentPickerCoordinator:
+			rootViewController?.viewModel.stopPickingFile()
 		default:
 			break
 		}

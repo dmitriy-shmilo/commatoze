@@ -12,6 +12,7 @@ extension ContentTableViewController: SheetViewDelegate {
 		editor.font = .systemFont(ofSize: 16.0)
 		editor.editorDelegate = self
 		currentEditor = editor
+		viewModel.startEditing()
 		return editor
 	}
 
