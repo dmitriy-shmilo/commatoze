@@ -210,12 +210,17 @@ class MainMenuController: NSObject {
 			  let viewModel = viewModel else {
 			return
 		}
-		let column = sheet
-			.currentSelection
+		let colCount = viewModel.columns.value.count
+		let selection = sheet.currentSelection
+		let column = selection
 			.topLeft(in: sheet)
 			.firstIndex(in: sheet)
 			.col
+
 		viewModel.insertColumn(at: column)
+		sheet.setSelection(selection.selection(
+			withColumnsShiftedBy: 1,
+			columnCount: colCount))
 	}
 
 	@objc func insertColumnAfter(_ sender: UICommand) {
@@ -236,12 +241,19 @@ class MainMenuController: NSObject {
 			  let viewModel = viewModel else {
 			return
 		}
-		let row = sheet
-			.currentSelection
+		let colCount = viewModel.columns.value.count
+		let rowCount = viewModel.rows.value.count
+		let selection = sheet.currentSelection
+		let row = selection
 			.topLeft(in: sheet)
 			.firstIndex(in: sheet)
 			.row
+
 		viewModel.insertRow(at: row)
+		sheet.setSelection(selection.selection(
+			withRowsShiftedBy: 1,
+			columnCount: colCount,
+			rowCount: rowCount))
 	}
 
 	@objc func insertRowAfter(_ sender: UICommand) {
@@ -275,6 +287,7 @@ class MainMenuController: NSObject {
 		default:
 			break
 		}
+		sheet.setSelection(.none)
 	}
 
 	@objc func deleteSelectedRows(_ sender: UICommand) {
@@ -295,6 +308,7 @@ class MainMenuController: NSObject {
 		default:
 			break
 		}
+		sheet.setSelection(.none)
 	}
 }
 
