@@ -210,6 +210,10 @@ class ContentTableViewModel {
 			return
 		}
 
+		undoManager.registerUndo(withTarget: self) { viewModel in
+			viewModel.removeColumns(from: insertIndex, to: insertIndex + 1)
+		}
+
 		var newData = [String]()
 		newData.reserveCapacity(oldData.count + rowCount)
 
@@ -244,6 +248,10 @@ class ContentTableViewModel {
 			return
 		}
 
+		undoManager.registerUndo(withTarget: self) { viewModel in
+			viewModel.removeRows(from: insertIndex, to: insertIndex + 1)
+		}
+
 		var newData = oldData
 		let newRow = (0..<columnCount).map { _ in "" }
 		newData.reserveCapacity(oldData.count + columnCount)
@@ -253,6 +261,8 @@ class ContentTableViewModel {
 	}
 
 	func removeColumns(from startIndex: Int, to endIndex: Int) {
+		// TODO: register undo
+		// TODO: support index set removal
 		let oldData = data.value
 		let rowCount = rows.value.count
 		let columnCount = columns.value.count
