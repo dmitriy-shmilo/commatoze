@@ -21,6 +21,16 @@ extension MainMenuController: MenuBuilder {
 	}
 
 	private static func fileMenu() -> [UIMenuElement] {
+		let new = UIKeyCommand(
+			title: NSLocalizedString(
+				"New",
+				comment: "New File"),
+			action: #selector(newAction(_:)),
+			input: "n",
+			modifierFlags: [.command])
+		
+		let newMenu = UIMenu(options: .displayInline, children: [new])
+
 		let open = UIKeyCommand(
 			title: NSLocalizedString("Open...", comment: "Open"),
 			action: #selector(openAction(_:)),
@@ -51,7 +61,7 @@ extension MainMenuController: MenuBuilder {
 
 		let saveMenu = UIMenu(options: .displayInline, children: [save, saveAs])
 
-		return [openMenu, saveMenu]
+		return [newMenu, openMenu, saveMenu]
 	}
 
 	private static func editMenu() -> [UIMenuElement] {

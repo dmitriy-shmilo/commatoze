@@ -23,6 +23,7 @@ class MainMenuController: NSObject {
 		}
 
 		let enabledActions = [
+			#selector(newAction(_:)),
 			#selector(openAction(_:)),
 			#selector(openAndReplaceAction(_:)),
 			#selector(saveAsAction(_:))
@@ -83,6 +84,10 @@ class MainMenuController: NSObject {
 	}
 
 	// MARK: - File
+	@objc func newAction(_ sender: UICommand) {
+		AppCoordinator.shared.startContentTable(url: nil)
+	}
+
 	@objc func openAction(_ sender: UICommand) {
 		coordinator?.presentOpenFilePicker(willReplaceContent: false)
 	}
