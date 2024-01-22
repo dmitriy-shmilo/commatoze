@@ -116,9 +116,10 @@ class ContentTableViewController: UIViewController {
 			}
 			.store(in: &subscriptions)
 
-		viewModel.currentFileName
+		viewModel.currentFileName.combineLatest(viewModel.isDirty)
 			.receive(on: DispatchQueue.main)
-			.sink { [weak self] name in
+			.sink { [weak self] name, isDirty in
+				let name = "\(name)\(isDirty ? " *" : "" )"
 				self?.view?.window?.windowScene?.title = name
 			}
 			.store(in: &subscriptions)

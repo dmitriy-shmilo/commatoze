@@ -20,6 +20,8 @@ class ContentTableViewModel {
 	let rows = CurrentValueSubject(value: [String]())
 	let currentFile = CurrentValueSubject<URL?, Never>(nil)
 	let currentFileName = CurrentValueSubject(value: "")
+
+	let isDirty = CurrentValueSubject(value: false)
 	let canUndo = CurrentValueSubject(value: false)
 	let canRedo = CurrentValueSubject(value: false)
 	let isEditing = CurrentValueSubject(value: false)
@@ -151,6 +153,7 @@ class ContentTableViewModel {
 				if FileManager.default.fileExists(atPath: tempUrl.path) {
 					let _ = try FileManager.default.replaceItemAt(url, withItemAt: tempUrl)
 				}
+				self?.isDirty.send(false)
 			} catch {
 				// TODO: report errors to the user
 			}
@@ -171,15 +174,18 @@ class ContentTableViewModel {
 			return
 		}
 		let previous = data.value[index.index]
-		undoManager.registerUndo(withTarget: self) { viewModel in
+
+		registerUndo(whileDirty: isDirty.value) { viewModel in
 			viewModel.setField(at: index, to: previous)
 		}
+
 		data.value.withUnsafeMutableBufferPointer {
 			$0[index.index] = value
 		}
 
 		undoStackChanged.send()
 		cellChanged.send(index)
+		isDirty.send(true)
 	}
 
 	func getField(at index: SheetIndex) -> String {
@@ -210,7 +216,7 @@ class ContentTableViewModel {
 			return
 		}
 
-		undoManager.registerUndo(withTarget: self) { viewModel in
+		registerUndo(whileDirty: isDirty.value) { viewModel in
 			viewModel.removeColumns(from: insertIndex, to: insertIndex + 1)
 		}
 
@@ -248,7 +254,7 @@ class ContentTableViewModel {
 			return
 		}
 
-		undoManager.registerUndo(withTarget: self) { viewModel in
+		registerUndo(whileDirty: isDirty.value) { viewModel in
 			viewModel.removeRows(from: insertIndex, to: insertIndex + 1)
 		}
 
@@ -372,6 +378,7 @@ class ContentTableViewModel {
 		readingHeader = true
 		rawData = []
 		rawColumns = []
+		isDirty.send(false)
 		undoManager.removeAllActions()
 		undoStackChanged.send()
 	}
@@ -400,6 +407,19 @@ class ContentTableViewModel {
 		}
 
 		try writer.finish()
+	}
+
+	private func registerUndo(
+		whileDirty isDirty: Bool,
+		handler: @escaping (ContentTableViewModel) -> Void) {
+		if isDirty {
+			undoManager.registerUndo(withTarget: self, handler: handler)
+		} else {
+			undoManager.registerUndo(withTarget: self) {
+				handler($0)
+				$0.isDirty.send(false)
+			}
+		}
 	}
 }
 
