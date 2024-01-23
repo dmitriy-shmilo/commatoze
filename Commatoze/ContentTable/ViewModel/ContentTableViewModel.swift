@@ -197,11 +197,13 @@ class ContentTableViewModel {
 
 	func undo() {
 		undoManager.undo()
+		isDirty.send(true)
 		undoStackChanged.send()
 	}
 
 	func redo() {
 		undoManager.redo()
+		isDirty.send(true)
 		undoStackChanged.send()
 	}
 
@@ -333,6 +335,10 @@ class ContentTableViewModel {
 				return self?.undoManager.canRedo ?? false
 			}
 			.assign(to: \.value, on: canRedo)
+			.store(in: &subscriptions)
+
+		canUndo.filter { !$0 }
+			.assign(to: \.value, on: isDirty)
 			.store(in: &subscriptions)
 	}
 
