@@ -23,6 +23,10 @@
 		2C59CF8E2B20E9970048363D /* Spreadsheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C59CF8D2B20E9780048363D /* Spreadsheet.framework */; };
 		2C59CF8F2B20E9970048363D /* Spreadsheet.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2C59CF8D2B20E9780048363D /* Spreadsheet.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		2C6347722B544BEC00D3C0EE /* UIView+Border.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C6347712B544BEC00D3C0EE /* UIView+Border.swift */; };
+		2C68C73A2B6816C400502069 /* CocoaLumberjack in Frameworks */ = {isa = PBXBuildFile; productRef = 2C68C7392B6816C400502069 /* CocoaLumberjack */; };
+		2C68C73C2B6816C400502069 /* CocoaLumberjackSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2C68C73B2B6816C400502069 /* CocoaLumberjackSwift */; };
+		2C68C7432B68173000502069 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C68C7422B68173000502069 /* Log.swift */; };
+		2C68C7452B6818C000502069 /* LogBootstrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C68C7442B6818C000502069 /* LogBootstrap.swift */; };
 		2C70E6A02B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C70E69F2B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift */; };
 		2C70E6A22B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C70E6A12B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift */; };
 		2C70E6A42B2F299000B82168 /* SheetSelection+Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C70E6A32B2F299000B82168 /* SheetSelection+Util.swift */; };
@@ -116,6 +120,8 @@
 		2C5984372B459E7B00E0CEF3 /* DocumentPickerCoordinatorInput.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentPickerCoordinatorInput.swift; sourceTree = "<group>"; };
 		2C59CF882B20E9780048363D /* Spreadsheet.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Spreadsheet.xcodeproj; path = Lib/spreadsheet/Spreadsheet.xcodeproj; sourceTree = "<group>"; };
 		2C6347712B544BEC00D3C0EE /* UIView+Border.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Border.swift"; sourceTree = "<group>"; };
+		2C68C7422B68173000502069 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		2C68C7442B6818C000502069 /* LogBootstrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogBootstrap.swift; sourceTree = "<group>"; };
 		2C70E69F2B2F261900B82168 /* ContentTableViewController+SheetViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+SheetViewDataSource.swift"; sourceTree = "<group>"; };
 		2C70E6A12B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ContentTableViewController+SheetViewDelegate.swift"; sourceTree = "<group>"; };
 		2C70E6A32B2F299000B82168 /* SheetSelection+Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SheetSelection+Util.swift"; sourceTree = "<group>"; };
@@ -152,7 +158,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C68C73A2B6816C400502069 /* CocoaLumberjack in Frameworks */,
 				2C59CF8E2B20E9970048363D /* Spreadsheet.framework in Frameworks */,
+				2C68C73C2B6816C400502069 /* CocoaLumberjackSwift in Frameworks */,
 				2C74875E2B21D43E001D134B /* LibCSV.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -267,6 +275,15 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		2C68C7412B6816EE00502069 /* Log */ = {
+			isa = PBXGroup;
+			children = (
+				2C68C7422B68173000502069 /* Log.swift */,
+				2C68C7442B6818C000502069 /* LogBootstrap.swift */,
+			);
+			path = Log;
+			sourceTree = "<group>";
+		};
 		2C70E6A52B2F36F100B82168 /* Spreadsheet */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,6 +340,7 @@
 				2C59842F2B45965800E0CEF3 /* DocumentPicker */,
 				2C917CE82B20DB54005FCFB1 /* Info.plist */,
 				2C917CE52B20DB54005FCFB1 /* LaunchScreen.storyboard */,
+				2C68C7412B6816EE00502069 /* Log */,
 				2C7487602B21D4AB001D134B /* Resources */,
 				2C917CDC2B20DB53005FCFB1 /* SceneDelegate.swift */,
 				2C70E6A52B2F36F100B82168 /* Spreadsheet */,
@@ -392,6 +410,10 @@
 			dependencies = (
 			);
 			name = Commatoze;
+			packageProductDependencies = (
+				2C68C7392B6816C400502069 /* CocoaLumberjack */,
+				2C68C73B2B6816C400502069 /* CocoaLumberjackSwift */,
+			);
 			productName = Commatoze;
 			productReference = 2C917CD72B20DB53005FCFB1 /* Commatoze.app */;
 			productType = "com.apple.product-type.application";
@@ -420,6 +442,9 @@
 				Base,
 			);
 			mainGroup = 2C917CCE2B20DB53005FCFB1;
+			packageReferences = (
+				2C68C7382B6816C400502069 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */,
+			);
 			productRefGroup = 2C917CD82B20DB53005FCFB1 /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -499,6 +524,7 @@
 				2C70E6A22B2F271000B82168 /* ContentTableViewController+SheetViewDelegate.swift in Sources */,
 				2C8ABFDC2B32D96F00C7330B /* SheetIndex+Util.swift in Sources */,
 				2C917CDB2B20DB53005FCFB1 /* AppDelegate.swift in Sources */,
+				2C68C7432B68173000502069 /* Log.swift in Sources */,
 				2C6347722B544BEC00D3C0EE /* UIView+Border.swift in Sources */,
 				2C9327242B4B3FD50069F308 /* ContentTableViewController+UIDropInteractionDelegate .swift in Sources */,
 				2C0FE2FB2B4EE36B002A7E94 /* HorizontalHeaderCell.swift in Sources */,
@@ -514,6 +540,7 @@
 				2CEF0C162B3EEA4E005E9D89 /* ContentTableSceneDelegate.swift in Sources */,
 				2CEF9A312B5A90DA00B5E00B /* ShetSelection+Shift.swift in Sources */,
 				2CEF0C102B3EE9A2005E9D89 /* AppCoordinatorInput.swift in Sources */,
+				2C68C7452B6818C000502069 /* LogBootstrap.swift in Sources */,
 				2C943CAB2B569DBD005EDEA9 /* MainMenuController.swift in Sources */,
 				2C5984382B459E7B00E0CEF3 /* DocumentPickerCoordinatorInput.swift in Sources */,
 				2CF6A4302B264DF2004FAD45 /* ContentTableViewModel.swift in Sources */,
@@ -759,6 +786,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		2C68C7382B6816C400502069 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/CocoaLumberjack/CocoaLumberjack.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		2C68C7392B6816C400502069 /* CocoaLumberjack */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C68C7382B6816C400502069 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjack;
+		};
+		2C68C73B2B6816C400502069 /* CocoaLumberjackSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C68C7382B6816C400502069 /* XCRemoteSwiftPackageReference "CocoaLumberjack" */;
+			productName = CocoaLumberjackSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 2C917CCF2B20DB53005FCFB1 /* Project object */;
 }

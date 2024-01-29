@@ -31,6 +31,8 @@ class ContentTableViewModel {
 	let isLoadingFile = CurrentValueSubject(value: false)
 	let isSavingFile = CurrentValueSubject(value: false)
 
+	private let log = Log(tagged: ContentTableViewModel.self)
+
 	private(set) var tempUrl: URL?
 
 	private var undoManager = UndoManager()
@@ -44,6 +46,7 @@ class ContentTableViewModel {
 	private var rawUrl: URL? = nil
 
 	init() {
+		log.logVerbose(message: "init")
 		parser.delegate = self
 		setupBusyFlags()
 		setupData()
@@ -58,15 +61,18 @@ class ContentTableViewModel {
 
 	// MARK: - File Handling
 	func pickFile() {
+		log.logVerbose(message: "pickFile")
 		// TODO: make coordinator calls from here
 		isPickingFile.send(true)
 	}
 
 	func stopPickingFile() {
+		log.logVerbose(message: "stopPickingFile")
 		isPickingFile.send(false)
 	}
 	
 	func readFile(url: URL) {
+		log.logVerbose(message: "readFile")
 		guard !isBusy.value else {
 			return
 		}
@@ -87,6 +93,7 @@ class ContentTableViewModel {
 
 	// TODO: this method is complete trash and needs to be rewritten
 	func saveTempFile() {
+		log.logVerbose(message: "saveTempFile")
 		guard !isBusy.value else {
 			return
 		}
@@ -120,6 +127,7 @@ class ContentTableViewModel {
 	}
 
 	func cleanUpTempFile() {
+		log.logVerbose(message: "cleanUpTempFile")
 		guard let tempUrl = tempUrl else {
 			return
 		}
@@ -128,6 +136,7 @@ class ContentTableViewModel {
 	}
 
 	func saveFile(to url: URL) {
+		log.logVerbose(message: "saveFile")
 		guard !isBusy.value else {
 			return
 		}
@@ -162,14 +171,17 @@ class ContentTableViewModel {
 
 	// MARK: - Editing
 	func startEditing() {
+		log.logVerbose(message: "startEditing")
 		isEditing.send(true)
 	}
 
 	func stopEditing() {
+		log.logVerbose(message: "stopEditing")
 		isEditing.send(false)
 	}
 
 	func setField(at index: SheetIndex, to value: String) {
+		log.logVerbose(message: "setField at: \(index)")
 		guard index.index >= 0 && index.index < data.value.count else {
 			return
 		}
@@ -196,12 +208,14 @@ class ContentTableViewModel {
 	}
 
 	func undo() {
+		log.logVerbose(message: "undo")
 		undoManager.undo()
 		isDirty.send(true)
 		undoStackChanged.send()
 	}
 
 	func redo() {
+		log.logVerbose(message: "redo")
 		undoManager.redo()
 		isDirty.send(true)
 		undoStackChanged.send()
@@ -209,6 +223,7 @@ class ContentTableViewModel {
 
 	// MARK: - Layout Editing
 	func insertColumn(at insertIndex: Int) {
+		log.logVerbose(message: "insertColumn at: \(insertIndex)")
 		// TODO: make async
 		let oldData = data.value
 		let rowCount = rows.value.count
@@ -248,6 +263,7 @@ class ContentTableViewModel {
 	}
 
 	func insertRow(at insertIndex: Int) {
+		log.logVerbose(message: "insertRow at: \(insertIndex)")
 		let oldData = data.value
 		let rowCount = rows.value.count
 		let columnCount = columns.value.count
@@ -269,6 +285,7 @@ class ContentTableViewModel {
 	}
 
 	func removeColumns(from startIndex: Int, to endIndex: Int) {
+		log.logVerbose(message: "removeColumns from: \(startIndex), to: \(endIndex)")
 		// TODO: register undo
 		// TODO: support index set removal
 		let oldData = data.value
@@ -301,6 +318,7 @@ class ContentTableViewModel {
 	}
 
 	func removeRows(from startIndex: Int, to endIndex: Int) {
+		log.logVerbose(message: "removeRows from: \(startIndex), to: \(endIndex)")
 		let oldData = data.value
 		let rowCount = rows.value.count
 		let columnCount = columns.value.count
@@ -381,6 +399,7 @@ class ContentTableViewModel {
 
 	// MARK: - Private Methods
 	private func reset() {
+		log.logVerbose(message: "reset")
 		readingHeader = true
 		rawData = []
 		rawColumns = []
